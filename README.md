@@ -51,13 +51,13 @@ Konvektivna nevremena u Hrvatskoj (tuča, olujni vjetar, bujične poplave) čest
 
 | Ime i prezime | Uloga | GitHub |
 |---|---|---|
-| [ime prezime] | voditelj tima | [@korisnik] |
+| Gabriel Buće | voditelj tima | [@korisnik] |
 | [ime prezime] | backend | [@korisnik] |
 | [ime prezime] | backend | [@korisnik] |
-| [ime prezime] | frontend | [@korisnik] |
-| [ime prezime] | frontend | [@korisnik] |
-| [ime prezime] | baza / DevOps | [@korisnik] |
-| [ime prezime] | dokumentacija / testovi | [@korisnik] |
+| Lorena Cvek | frontend | [@korisnik] |
+| (ime) | baza / DevOps | [@korisnik] |
+| Domagoj Brus | dokumentacija / testovi | @db678 |
+| Leon Pastuović | dokumentacija / testovi | [@korisnik] |
 
 ## Izvor podataka
 
