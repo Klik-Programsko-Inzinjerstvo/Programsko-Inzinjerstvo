@@ -1,0 +1,25 @@
+# Java / Spring
+target/
+build/
+.gradle/
+*.class
+*.jar
+!**/gradle/wrapper/gradle-wrapper.jar
+
+# Node / React
+node_modules/
+dist/
+*.log
+
+# IDE
+.idea/
+.vscode/
+*.iml
+.DS_Store
+
+# Tajni podaci
+.env
+.env.*
+!.env.example
+application-local.yml
+application-local.properties
