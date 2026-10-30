@@ -2,7 +2,7 @@
 
 > Službeni podaci DHMZ-a i prijave nevremena s terena, na jednoj karti.
 
-Projekt iz kolegija **Programsko inženjerstvo** (FER, ak. god. 2026./2027.) · Grupa **G08** · Tim **[naziv tima]** · asistent Marin Matjanec
+Projekt iz kolegija **Programsko inženjerstvo** (FER, ak. god. 2026./2027.) · Grupa **G08** · Tim **Klik** · asistent Marin Matjanec
 
 ## O projektu
 
@@ -52,10 +52,10 @@ Konvektivna nevremena u Hrvatskoj (tuča, olujni vjetar, bujične poplave) čest
 | Ime i prezime | Uloga | GitHub |
 |---|---|---|
 | Gabriel Buće | voditelj tima | @gb56872 |
-| [ime prezime] | backend | [@korisnik] |
-| [ime prezime] | backend | [@korisnik] |
+|  | backend |  |
+|  | backend |  |
 | Lorena Cvek | frontend | @lorenacvek |
-| (ime) | baza | [@korisnik] |
+|  | baza |  |
 | Domagoj Brus | dokumentacija / testovi | @db678 |
 | Leon Pastuović | dokumentacija / testovi | @Leon-P1 |
 
