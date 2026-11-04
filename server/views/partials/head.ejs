@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="hr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= title %> – StormWatch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<%
+  const nav = [['/', 'Pregled'], ['/prognoza', 'Prognoza']];
+  if (user) nav.push(['/prijave', 'Prijave'], ['/lokacije', 'Lokacije'], ['/statistika', 'Statistika']);
+  if (user && ['moderator','administrator'].includes(user.uloga)) nav.push(['/moderacija', 'Moderacija']);
+  if (user && user.uloga === 'administrator') nav.push(['/admin', 'Administracija']);
+%>
+<header class="top">
+  <a class="brand" href="/">StormWatch</a>
+  <nav aria-label="Glavna navigacija">
+    <% nav.forEach(([h, t]) => { %><a href="<%= h %>" <%- path === h ? 'aria-current="page"' : '' %>><%= t %></a><% }) %>
+  </nav>
+  <div class="acct">
+    <% if (user) { %>
+      <a class="bell" href="/obavijesti" aria-label="Obavijesti">Obavijesti<% if (neprocitane) { %><span class="dot"><%= neprocitane %></span><% } %></a>
+      <a href="/profil"><%= user.ime %></a>
+      <a href="/odjava">Odjava</a>
+    <% } else { %>
+      <a href="/prijava">Prijava</a><a class="btn small" href="/registracija">Registracija</a>
+    <% } %>
+  </div>
+</header>
+<main>

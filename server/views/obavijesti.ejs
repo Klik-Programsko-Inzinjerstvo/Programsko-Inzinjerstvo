@@ -1,0 +1,14 @@
+<%- include('partials/head', { title }) %>
+<h1>Obavijesti</h1>
+<ul class="plain">
+  <% obavijesti.forEach(o => { %><li class="notice <%= o.procitano ? '' : 'unread' %>"><%= o.tekst %> <span class="meta"><%= o.vrijeme %></span></li><% }) %>
+</ul>
+<h2>Postavke obavijesti</h2>
+<form class="form narrow">
+  <label class="check"><input type="checkbox" checked> Narančasto ili crveno DHMZ upozorenje za moju regiju</label>
+  <label class="check"><input type="checkbox" checked> Potvrđena prijava tuče u krugu od <input type="number" value="20" min="1" style="width:5em"> km</label>
+  <label class="check"><input type="checkbox"> Nove prijave korisnika koje pratim</label>
+  <label class="check"><input type="checkbox" checked> Šalji i e-poštom</label>
+  <button class="btn small">Spremi postavke</button>
+</form>
+<%- include('partials/foot') %>

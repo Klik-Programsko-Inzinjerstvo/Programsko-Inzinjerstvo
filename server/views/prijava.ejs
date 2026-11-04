@@ -1,0 +1,13 @@
+<%- include('partials/head', { title }) %>
+<h1>Prijava</h1>
+<form method="post" action="/prijava" class="form narrow">
+  <input type="hidden" name="povratak" value="<%= povratak %>">
+  <label>Korisničko ime <input name="korisnik" required autocomplete="username"></label>
+  <label>Lozinka <input type="password" name="lozinka" autocomplete="current-password"></label>
+  <label>Uloga (samo za demo)
+    <select name="uloga"><option>korisnik</option><option>pouzdani motritelj</option><option>moderator</option><option>meteorolog</option><option>administrator</option></select>
+  </label>
+  <button class="btn">Prijavi se</button>
+  <p class="note">Nemate račun? <a href="/registracija">Registrirajte se</a>.</p>
+</form>
+<%- include('partials/foot') %>

@@ -1,0 +1,12 @@
+<%- include('partials/head', { title }) %>
+<h1>Administracija</h1>
+<h2>Korisnici</h2>
+<div class="tablewrap"><table>
+  <thead><tr><th>Ime</th><th>E-pošta</th><th>Uloga</th><th>Bodovi</th><th></th></tr></thead>
+  <tbody><% korisnici.forEach(k => { %><tr><td><%= k.ime %></td><td><%= k.email %></td>
+    <td><select><% ['korisnik','pouzdani motritelj','moderator','meteorolog','administrator'].forEach(u => { %><option <%= u === k.uloga ? 'selected' : '' %>><%= u %></option><% }) %></select></td>
+    <td><%= k.bodovi %></td><td><button class="linklike">Deaktiviraj</button></td></tr><% }) %></tbody>
+</table></div>
+<h2>Preuzimanje podataka s DHMZ-a</h2>
+<form class="form narrow" onsubmit="return false"><label>Interval (minute) <input type="number" value="30" min="5"></label><button class="btn small">Spremi</button></form>
+<%- include('partials/foot') %>
