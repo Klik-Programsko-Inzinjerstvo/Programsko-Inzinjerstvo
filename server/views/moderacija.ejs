@@ -1,0 +1,11 @@
+<%- include('partials/head', { title }) %>
+<h1>Moderacija</h1>
+<p class="note">Prikazane su prijave na čekanju i prijavljeni sadržaj iz vaše regije.</p>
+<ul class="reports">
+  <% cekanje.forEach(p => { %>
+    <li class="report"><div class="row"><h2><%= p.vrsta %>, <%= p.mjesto %></h2><span class="badge"><%= p.status %></span></div>
+      <p><%= p.opis %></p><p class="meta"><%= p.vrijeme %> · <%= p.autor %></p>
+      <div class="row"><button class="btn small">Potvrdi</button><button class="btn ghost small">Odbij</button><button class="linklike">Izbriši</button></div></li>
+  <% }) %>
+</ul>
+<%- include('partials/foot') %>

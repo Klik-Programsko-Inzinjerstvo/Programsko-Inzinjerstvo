@@ -1,0 +1,13 @@
+<%- include('partials/head', { title }) %>
+<h1>Omiljene lokacije</h1>
+<div class="cards">
+  <% lokacije.forEach(l => { %>
+    <article class="card"><h2><%= l.ime %></h2>
+      <p class="big"><%= l.postaja.temp.toFixed(1) %> °C</p>
+      <p class="meta">postaja <%= l.postaja.ime %> · vjetar <%= l.postaja.vjetarSmjer %> <%= l.postaja.vjetarBrzina %> km/h</p>
+      <% l.upozorenja.forEach(u => { %><p class="warn lvl-<%= u.razina %>"><strong><%= u.pojava %></strong> <span>do <%= u.vrijediDo %></span></p><% }) %>
+    </article>
+  <% }) %>
+</div>
+<p><button class="btn ghost">Dodaj lokaciju</button></p>
+<%- include('partials/foot') %>

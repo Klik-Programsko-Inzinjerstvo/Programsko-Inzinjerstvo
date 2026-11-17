@@ -1,0 +1,33 @@
+<%- include('partials/head', { title }) %>
+<section class="warnbar" aria-label="Aktivna upozorenja">
+  <% upozorenja.forEach(u => { %>
+    <div class="warn lvl-<%= u.razina %>"><strong><%= u.regija %></strong> <span><%= u.pojava %>, do <%= u.vrijediDo %></span></div>
+  <% }) %>
+</section>
+<div class="split">
+  <section class="mapwrap">
+    <fieldset class="layers">
+      <legend>Slojevi</legend>
+      <label class="check"><input type="checkbox" data-layer="postaje" checked> Mjerne postaje</label>
+      <label class="check"><input type="checkbox" data-layer="prijave" checked> Potvrđene prijave</label>
+    </fieldset>
+    <div id="map" role="application" aria-label="Karta"></div>
+  </section>
+  <aside class="side">
+    <h2>Trenutačni uvjeti</h2>
+    <ul class="stations">
+      <% postaje.forEach(p => { %>
+        <li><span class="name"><%= p.ime %></span>
+          <span class="temp"><%= p.temp.toFixed(1) %> °C</span>
+          <span class="meta">vlaga <%= p.vlaga %> % · tlak <%= p.tlak %> hPa · vjetar <%= p.vjetarSmjer %> <%= p.vjetarBrzina %> km/h</span></li>
+      <% }) %>
+    </ul>
+    <p class="note">Podaci se osvježavaju svakih 30 minuta.</p>
+    <% if (!user) { %><p>Za prijavu nevremena <a href="/registracija">otvorite račun</a>.</p>
+    <% } else { %><a class="btn" href="/prijave/nova">Prijavi nevrijeme</a><% } %>
+  </aside>
+</div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>window.SW = { postaje: <%- JSON.stringify(postaje) %>, prijave: <%- JSON.stringify(potvrdene) %> };</script>
+<script src="/js/map.js"></script>
+<%- include('partials/foot') %>

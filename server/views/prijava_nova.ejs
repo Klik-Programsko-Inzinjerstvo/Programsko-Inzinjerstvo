@@ -1,0 +1,25 @@
+<%- include('partials/head', { title }) %>
+<h1>Nova prijava nevremena</h1>
+<form method="post" action="/prijave/nova" enctype="multipart/form-data" class="form">
+  <label>Vrsta pojave
+    <select name="vrsta" required><option>Tuča</option><option>Olujni vjetar</option><option>Jaka kiša i poplava</option><option>Snijeg</option><option>Poledica</option><option>Pijavica</option><option>Ostalo</option></select>
+  </label>
+  <label>Vrijeme opažanja <input type="datetime-local" name="vrijeme" required></label>
+  <label>Veličina zrna tuče
+    <select name="intenzitet"><option value="">Nije primjenjivo</option><option>grašak</option><option>lješnjak</option><option>orah</option><option>jaje</option></select>
+  </label>
+  <label>Procjena štete <input name="steta" placeholder="npr. oštećen krov, srušeno stablo"></label>
+  <fieldset>
+    <legend>Lokacija</legend>
+    <button type="button" class="btn ghost" id="gps">Koristi moju lokaciju</button>
+    <div id="pick" class="minimap"></div>
+    <input type="hidden" name="lat"><input type="hidden" name="lng">
+    <p class="note" id="coords">Kliknite na kartu ili upotrijebite GPS.</p>
+  </fieldset>
+  <label>Fotografije <input type="file" name="foto" accept="image/*" multiple></label>
+  <label>Dodatni opis <textarea name="opis" rows="3"></textarea></label>
+  <button class="btn">Pošalji prijavu</button>
+</form>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="/js/pick.js"></script>
+<%- include('partials/foot') %>

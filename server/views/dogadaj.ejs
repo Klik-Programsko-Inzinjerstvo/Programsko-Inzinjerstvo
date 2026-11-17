@@ -1,0 +1,19 @@
+<%- include('partials/head', { title }) %>
+<h1><%= d.naziv %></h1>
+<% if (d.komentar) { %>
+  <section class="expert"><h2>Stručni komentar</h2><p><%= d.komentar.tekst %></p><p class="meta">meteorolog: <%= d.komentar.meteorolog %></p></section>
+<% } %>
+<h2>Prijave (<%= prijave.length %>)</h2>
+<ul class="reports">
+  <% prijave.forEach(p => { %>
+    <li class="report confirmed"><h3><%= p.mjesto %></h3><p><%= p.opis %></p>
+      <p class="meta"><%= p.vrijeme %> · <%= p.autor %> · vjerodostojnost <%= p.vjerodostojnost %> %</p>
+      <div class="row"><button class="btn ghost small">I ja to vidim</button><button class="btn ghost small">Kod mene nije tako</button><button class="linklike">Prijavi sadržaj</button></div></li>
+  <% }) %>
+</ul>
+<h2>Rasprava</h2>
+<ul class="plain">
+  <% d.rasprava.forEach(c => { %><li><strong><%= c.autor %></strong> <%= c.tekst %></li><% }) %>
+</ul>
+<form class="form" onsubmit="return false"><label>Vaš komentar <textarea rows="2"></textarea></label><button class="btn small">Objavi komentar</button></form>
+<%- include('partials/foot') %>
