@@ -23,23 +23,38 @@ Konvektivna nevremena u Hrvatskoj (tuča, olujni vjetar, bujične poplave) čest
 
 | Dio sustava | Tehnologija |
 |---|---|
-| Frontend | React + TypeScript, Vite, Tailwind CSS |
+| Frontend | EJS predlošci (iscrtava ih poslužitelj), CSS, JavaScript u pregledniku |
 | Karta | Leaflet + OpenStreetMap |
-| Backend | Java 21 + Spring Boot 3 (REST API, Spring Security, `@Scheduled`) |
-| Autentifikacija | Google OpenID Connect / OAuth 2.0 |
-| Stvarno vrijeme | WebSocket (STOMP) |
-| Baza podataka | PostgreSQL + PostGIS |
-| Slike i e-pošta | Cloudinary, Spring Mail |
-| Ispitivanje | JUnit 5, Mockito, Selenium |
-| Deploy | Docker, Render |
+| Backend | Node.js 24 + Express 5 |
+| Autentifikacija | Google OpenID Connect / OAuth 2.0 (`openid-client`) |
+| Stvarno vrijeme | WebSocket (planirano za drugi ciklus) |
+| Baza podataka | PostgreSQL + PostGIS (Supabase), migracije `node-pg-migrate` |
+| Slike i e-pošta | Cloudinary; e-pošta planirana za drugi ciklus |
+| Ispitivanje | `node:test`, supertest |
+| Deploy | Render |
 | Dokumentacija | Markdown, PlantUML, draw.io |
+
+## Pokretanje
+
+```bash
+npm run build      # instalira ovisnosti za database/ i backend/
+npm run migrate    # tablice u bazi iz DATABASE_URL
+npm start          # http://localhost:3000
+npm test
+```
+
+Postavke (`.env`), postavljanje na Render i poznati nedostaci: [backend/README.md](backend/README.md).
+
+**Javna adresa:** _upisati nakon prvog deploya_
 
 ## Struktura repozitorija
 
 ```
 .
-├── backend/              # Spring Boot aplikacija
-├── frontend/             # React + TypeScript aplikacija
+├── backend/              # Express poslužitelj: rute, Google prijava, uvoz s DHMZ-a, testovi
+├── server/               # frontend: EJS predlošci, CSS i JavaScript za preglednik
+├── database/             # migracije, testni podaci i upiti (PostgreSQL + PostGIS)
+├── render.yaml           # postavke servisa na Renderu
 ├── docs/
 │   ├── zahtjevi/         # funkcijski i nefunkcijski zahtjevi, obrasci uporabe
 │   ├── dijagrami/        # UML dijagrami (PlantUML, draw.io)
