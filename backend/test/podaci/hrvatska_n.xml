@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Hrvatska>
+<DatumTermin>
+<Datum>14.07.2026</Datum>
+<Termin>17</Termin>
+</DatumTermin>
+<Grad autom="0">
+<GradIme>Zagreb-Maksimir</GradIme>
+<Lat>45.822</Lat>
+<Lon>16.034</Lon>
+<Podatci>
+<Temp> 22.6</Temp>
+<Vlaga>79</Vlaga>
+<Tlak>1008.1</Tlak>
+<TlakTend>-0.4</TlakTend>
+<VjetarSmjer>NW</VjetarSmjer>
+<VjetarBrzina>17.5</VjetarBrzina>
+<Vrijeme>grmljavina s kišom</Vrijeme>
+<VrijemeZnak>17</VrijemeZnak>
+</Podatci>
+</Grad>
+<Grad autom="0">
+<GradIme>RC Puntijarka</GradIme>
+<Lat>45.908</Lat>
+<Lon>15.968 </Lon>
+<Podatci>
+<Temp>  7.8</Temp>
+<Vlaga>99</Vlaga>
+<Tlak> 887.5*</Tlak>
+<TlakTend>-1.5</TlakTend>
+<VjetarSmjer>C</VjetarSmjer>
+<VjetarBrzina> 0</VjetarBrzina>
+<Vrijeme>magla</Vrijeme>
+<VrijemeZnak>40</VrijemeZnak>
+</Podatci>
+</Grad>
+<Grad autom="0">
+<GradIme>Nova postaja</GradIme>
+<Lat>45.300</Lat>
+<Lon>18.400</Lon>
+<Podatci>
+<Temp>-</Temp>
+<Vlaga></Vlaga>
+<Tlak>1010.0</Tlak>
+<TlakTend></TlakTend>
+<VjetarSmjer>SE</VjetarSmjer>
+<VjetarBrzina>5</VjetarBrzina>
+<Vrijeme></Vrijeme>
+<VrijemeZnak></VrijemeZnak>
+</Podatci>
+</Grad>
+<Grad autom="0">
+<GradIme>Bez koordinata</GradIme>
+<Lat></Lat>
+<Lon></Lon>
+<Podatci><Temp>10</Temp></Podatci>
+</Grad>
+</Hrvatska>
