@@ -18,7 +18,7 @@
     <ul class="stations">
       <% postaje.forEach(p => { %>
         <li><span class="name"><%= p.ime %></span>
-          <span class="temp"><%= p.temp.toFixed(1) %> °C</span>
+          <span class="temp"><%= p.temp == null ? '–' : p.temp.toFixed(1) %> °C</span>
           <span class="meta">vlaga <%= p.vlaga %> % · tlak <%= p.tlak %> hPa · vjetar <%= p.vjetarSmjer %> <%= p.vjetarBrzina %> km/h</span></li>
       <% }) %>
     </ul>
@@ -28,6 +28,6 @@
   </aside>
 </div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script>window.SW = { postaje: <%- JSON.stringify(postaje) %>, prijave: <%- JSON.stringify(potvrdene) %> };</script>
+<script>window.SW = { postaje: <%- json(postaje) %>, prijave: <%- json(potvrdene) %> };</script>
 <script src="/js/map.js"></script>
 <%- include('partials/foot') %>

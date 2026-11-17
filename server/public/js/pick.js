@@ -7,6 +7,9 @@ function set(lat, lng) {
   document.getElementById('coords').textContent = `Odabrano: ${lat.toFixed(4)}, ${lng.toFixed(4)}`;
 }
 map.on('click', e => set(e.latlng.lat, e.latlng.lng));
+// nakon greške u obrascu poslužitelj vraća već odabranu lokaciju
+const lat0 = parseFloat(document.querySelector('[name=lat]').value), lng0 = parseFloat(document.querySelector('[name=lng]').value);
+if (Number.isFinite(lat0) && Number.isFinite(lng0)) { set(lat0, lng0); map.setView([lat0, lng0], 11); }
 document.getElementById('gps').addEventListener('click', () => navigator.geolocation?.getCurrentPosition(
   pos => { set(pos.coords.latitude, pos.coords.longitude); map.setView([pos.coords.latitude, pos.coords.longitude], 12); },
   () => { document.getElementById('coords').textContent = 'GPS nije dostupan. Odaberite lokaciju na karti.'; }));

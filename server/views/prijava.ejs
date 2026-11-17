@@ -1,13 +1,21 @@
 <%- include('partials/head', { title }) %>
 <h1>Prijava</h1>
-<form method="post" action="/prijava" class="form narrow">
-  <input type="hidden" name="povratak" value="<%= povratak %>">
-  <label>Korisničko ime <input name="korisnik" required autocomplete="username"></label>
-  <label>Lozinka <input type="password" name="lozinka" autocomplete="current-password"></label>
-  <label>Uloga (samo za demo)
-    <select name="uloga"><option>korisnik</option><option>pouzdani motritelj</option><option>moderator</option><option>meteorolog</option><option>administrator</option></select>
-  </label>
-  <button class="btn">Prijavi se</button>
-  <p class="note">Nemate račun? <a href="/registracija">Registrirajte se</a>.</p>
-</form>
+<div class="form narrow">
+  <% if (googleUkljucen) { %>
+    <a class="btn" href="/auth/google?povratak=<%= encodeURIComponent(povratak) %>">Prijava putem Googlea</a>
+    <p class="note">Prijavljujete se Google računom (OpenID Connect). Ako još nemate račun u StormWatchu, otvorit će se automatski.</p>
+  <% } else { %>
+    <p class="note">Prijava putem Googlea trenutno nije postavljena na poslužitelju.</p>
+  <% } %>
+</div>
+<% if (demoKorisnici) { %>
+  <form method="post" action="/prijava/demo" class="form narrow">
+    <h2>Brza prijava (samo lokalni razvoj)</h2>
+    <input type="hidden" name="povratak" value="<%= povratak %>">
+    <label>Korisnik
+      <select name="korisnikId"><% demoKorisnici.forEach(k => { %><option value="<%= k.id %>"><%= k.korisnicko_ime %> (<%= k.uloga %>)</option><% }) %></select>
+    </label>
+    <button class="btn ghost">Prijavi se kao odabrani korisnik</button>
+  </form>
+<% } %>
 <%- include('partials/foot') %>

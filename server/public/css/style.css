@@ -60,5 +60,11 @@ fieldset{border:1px solid var(--line);border-radius:8px}
 .bars i{display:block;height:16px;background:var(--accent);border-radius:3px}
 .tablewrap{overflow-x:auto}table{border-collapse:collapse;width:100%}th,td{text-align:left;padding:.5rem;border-bottom:1px solid var(--line)}
 footer{text-align:center;color:var(--muted);font-size:.85rem;padding:1.5rem 1rem;border-top:1px solid var(--line)}
+.banner{margin:1rem 0 0;padding:.6rem .9rem;border-radius:6px;border:1px solid var(--narancasta);background:var(--panel)}
+.banner.ok{border-color:var(--zelena)}
+.errors{border:2px solid var(--crvena);border-radius:8px;padding:.6rem 1rem;background:var(--panel)}
+.errors ul{margin:.4rem 0 0;padding-left:1.2rem}
+.photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.6rem;margin:1rem 0}
+.photos img{width:100%;height:160px;object-fit:cover;border-radius:6px;border:1px solid var(--line)}
 @media (max-width:860px){.split{grid-template-columns:1fr}#map{height:55vh}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}

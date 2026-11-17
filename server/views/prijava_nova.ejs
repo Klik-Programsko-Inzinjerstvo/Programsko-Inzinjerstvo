@@ -1,23 +1,28 @@
 <%- include('partials/head', { title }) %>
+<% const v = vrijednosti; const odabrano = (polje, vr) => v[polje] === vr ? 'selected' : ''; %>
 <h1>Nova prijava nevremena</h1>
+<% if (greske.length) { %>
+  <div class="errors" role="alert"><strong>Prijava nije poslana:</strong>
+    <ul><% greske.forEach(g => { %><li><%= g %></li><% }) %></ul></div>
+<% } %>
 <form method="post" action="/prijave/nova" enctype="multipart/form-data" class="form">
   <label>Vrsta pojave
-    <select name="vrsta" required><option>Tuča</option><option>Olujni vjetar</option><option>Jaka kiša i poplava</option><option>Snijeg</option><option>Poledica</option><option>Pijavica</option><option>Ostalo</option></select>
+    <select name="vrsta" required><% ['Tuča','Olujni vjetar','Jaka kiša i poplava','Snijeg','Poledica','Pijavica','Ostalo'].forEach(o => { %><option <%= odabrano('vrsta', o) %>><%= o %></option><% }) %></select>
   </label>
-  <label>Vrijeme opažanja <input type="datetime-local" name="vrijeme" required></label>
+  <label>Vrijeme opažanja <input type="datetime-local" name="vrijeme" required value="<%= v.vrijeme || '' %>"></label>
   <label>Veličina zrna tuče
-    <select name="intenzitet"><option value="">Nije primjenjivo</option><option>grašak</option><option>lješnjak</option><option>orah</option><option>jaje</option></select>
+    <select name="intenzitet"><option value="">Nije primjenjivo</option><% ['grašak','lješnjak','orah','jaje'].forEach(o => { %><option <%= odabrano('intenzitet', o) %>><%= o %></option><% }) %></select>
   </label>
-  <label>Procjena štete <input name="steta" placeholder="npr. oštećen krov, srušeno stablo"></label>
+  <label>Procjena štete <input name="steta" placeholder="npr. oštećen krov, srušeno stablo" value="<%= v.steta || '' %>"></label>
   <fieldset>
     <legend>Lokacija</legend>
     <button type="button" class="btn ghost" id="gps">Koristi moju lokaciju</button>
     <div id="pick" class="minimap"></div>
-    <input type="hidden" name="lat"><input type="hidden" name="lng">
+    <input type="hidden" name="lat" value="<%= v.lat || '' %>"><input type="hidden" name="lng" value="<%= v.lng || '' %>">
     <p class="note" id="coords">Kliknite na kartu ili upotrijebite GPS.</p>
   </fieldset>
   <label>Fotografije <input type="file" name="foto" accept="image/*" multiple></label>
-  <label>Dodatni opis <textarea name="opis" rows="3"></textarea></label>
+  <label>Dodatni opis <textarea name="opis" rows="3"><%= v.opis || '' %></textarea></label>
   <button class="btn">Pošalji prijavu</button>
 </form>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>

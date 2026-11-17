@@ -1,9 +1,11 @@
 <%- include('partials/head', { title }) %>
 <h1>Registracija</h1>
-<form method="post" action="/registracija" class="form narrow">
-  <label>Korisničko ime <input name="korisnik" required></label>
-  <label>E-pošta <input type="email" name="email" required autocomplete="email"></label>
-  <label>Lozinka <input type="password" name="lozinka" minlength="8" required autocomplete="new-password"></label>
-  <button class="btn">Otvori račun</button>
-</form>
+<div class="form narrow">
+  <p>Račun se otvara Google računom. Pri prvoj prijavi StormWatch preuzima vašu potvrđenu adresu e-pošte, ime i sliku profila. Lozinku ne spremamo.</p>
+  <% if (googleUkljucen) { %>
+    <a class="btn" href="/auth/google">Registracija putem Googlea</a>
+  <% } else { %>
+    <p class="note">Prijava putem Googlea trenutno nije postavljena na poslužitelju.</p>
+  <% } %>
+</div>
 <%- include('partials/foot') %>
