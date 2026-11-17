@@ -58,9 +58,11 @@ const korisnik = await db.korisnikIzGooglea({ sub, email, ime, slika }); // nako
 | `mjerenjeUTrenutku(lat, lng, vrijeme)` | službeno mjerenje uz prijavu (FZ-06) |
 | `aktivnaUpozorenja()` | upozorenja koja trenutno vrijede |
 | `prognoze(regijaId?)` | prognoza od danas nadalje |
+| `spremiMjerenjaDhmz({ vrijeme, postaje })` | uvoz trenutačnih podataka s DHMZ-a svakih 30 min (FZ-03) |
+| `vrstePojava()`, `regije()` | šifrarnici za obrazac prijave i odabir regije |
 | `prijave({ ...filtri })` | prijave za kartu: vrsta, razdoblje, krug oko točke, samo potvrđene |
 | `prijava(id)`, `prijaveKorisnika(id)` | jedna prijava, prijave korisnika |
 | `spremiPrijavu({...})` | nova prijava sa slikama (FZ-06) |
-| `korisnikIzGooglea({...})`, `korisnik(id)` | prijava preko Googlea (FZ-02), profil |
+| `korisnikIzGooglea({...})`, `korisnik(id)`, `korisnici()` | prijava preko Googlea (FZ-02), profil, popis korisnika |
 
 Koordinate se uvijek predaju kao `(lat, lng)`.

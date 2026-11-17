@@ -89,6 +89,61 @@ async function prognoze(regijaId = null) {
   return rows;
 }
 
+/**
+ * Sprema jedno preuzimanje trenutačnih podataka s DHMZ-a (FZ-03).
+ * Postaju koje još nema dodaje (regija po nazivu, a ako je nema, regija
+ * najbliže postaje). Mjerenje za isti termin se prepisuje: DHMZ je službeni
+ * izvor i ima prednost pred ranije upisanim (npr. testnim) vrijednostima.
+ * @param vrijeme  termin mjerenja
+ * @param postaje  [{ oznaka, regija, lat, lng, temperatura, vlaga, tlak, vjetarSmjer, vjetarBrzina }]
+ * @returns broj novih mjerenja (prepisana se ne broje)
+ */
+async function spremiMjerenjaDhmz({ vrijeme, postaje }) {
+  return transakcija(async (k) => {
+    let novih = 0;
+    for (const p of postaje) {
+      const { rows: [postaja] } = await k.query(`
+        INSERT INTO postaja (dhmz_oznaka, ime, regija_id, lokacija)
+        VALUES ($1, $1,
+                COALESCE((SELECT id FROM regija WHERE naziv = $2),
+                         (SELECT regija_id FROM postaja WHERE regija_id IS NOT NULL
+                          ORDER BY lokacija <-> ${tocka('$4', '$3')} LIMIT 1)),
+                ${tocka('$4', '$3')})
+        ON CONFLICT (dhmz_oznaka) DO UPDATE
+          SET lokacija = EXCLUDED.lokacija,
+              regija_id = COALESCE((SELECT id FROM regija WHERE naziv = $2), postaja.regija_id)
+        RETURNING id`, [p.oznaka, p.regija, p.lat, p.lng]);
+
+      const { rows: [mjerenje] } = await k.query(`
+        INSERT INTO mjerenje (postaja_id, vrijeme, temperatura, vlaga, tlak, vjetar_smjer, vjetar_brzina)
+        VALUES ($1, $2, $3, $4, $5, $6, $7)
+        ON CONFLICT (postaja_id, vrijeme) DO UPDATE
+          SET temperatura = EXCLUDED.temperatura, vlaga = EXCLUDED.vlaga, tlak = EXCLUDED.tlak,
+              vjetar_smjer = EXCLUDED.vjetar_smjer, vjetar_brzina = EXCLUDED.vjetar_brzina, preuzeto = now()
+        RETURNING (xmax = 0) AS novo`,
+      [postaja.id, vrijeme, p.temperatura, p.vlaga, p.tlak, p.vjetarSmjer, p.vjetarBrzina]);
+      if (mjerenje.novo) novih += 1;
+    }
+    return novih;
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Šifrarnici
+// ---------------------------------------------------------------------------
+
+/** Vrste pojava za obrazac prijave, npr. { kod: 'tuca', naziv: 'Tuča' }. */
+async function vrstePojava() {
+  const { rows } = await pool.query('SELECT kod, naziv FROM vrsta_pojave ORDER BY id');
+  return rows;
+}
+
+/** Regije, abecedno (odabir regije za prognozu). */
+async function regije() {
+  const { rows } = await pool.query('SELECT id, naziv FROM regija ORDER BY naziv');
+  return rows;
+}
+
 // ---------------------------------------------------------------------------
 // Prijave
 // ---------------------------------------------------------------------------
@@ -217,8 +272,19 @@ async function korisnik(id) {
   return rows[0] || null;
 }
 
+/** Aktivni korisnici s ulogom, po korisničkom imenu. */
+async function korisnici() {
+  const { rows } = await pool.query(`
+    SELECT k.id, k.korisnicko_ime, k.email, u.kod AS uloga, k.reputacija
+    FROM korisnik k JOIN uloga u ON u.id = k.uloga_id
+    WHERE k.aktivan
+    ORDER BY k.korisnicko_ime`);
+  return rows;
+}
+
 module.exports = {
-  zadnjaMjerenja, najblizaPostaja, mjerenjeUTrenutku, aktivnaUpozorenja, prognoze,
+  zadnjaMjerenja, najblizaPostaja, mjerenjeUTrenutku, aktivnaUpozorenja, prognoze, spremiMjerenjaDhmz,
+  vrstePojava, regije,
   prijave, prijava, prijaveKorisnika, spremiPrijavu,
-  korisnikIzGooglea, korisnik,
+  korisnikIzGooglea, korisnik, korisnici,
 };
