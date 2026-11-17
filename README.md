@@ -15,6 +15,7 @@ Konvektivna nevremena u Hrvatskoj (tuča, olujni vjetar, bujične poplave) čest
 | [Funkcijski zahtjevi](docs/zahtjevi/funkcijski-zahtjevi.md) | FZ-01 – FZ-15 |
 | [Nefunkcijski zahtjevi](docs/zahtjevi/nefunkcijski-zahtjevi.md) | NFZ-01 – NFZ-06 |
 | [Obrasci uporabe](docs/zahtjevi/obrasci-uporabe.md) | UC-01 – UC-10 (ključni: UC-03, UC-04, UC-06) |
+| [Model podataka](docs/model-podataka.md) | ER dijagram i opis tablica |
 | [Kako radimo](CONTRIBUTING.md) | Grane, commitovi, pull requestovi, Issues |
 | [Predaje](docs/deliverables/) | PDF dokumentacija za predaje |
 
