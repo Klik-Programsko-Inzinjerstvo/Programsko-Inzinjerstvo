@@ -32,5 +32,8 @@ module.exports = function javneRute({ db }) {
     });
   });
 
+  // traži je Google za objavu prijave putem Googlea (OAuth consent screen)
+  r.get('/privatnost', (req, res) => res.render('privatnost', { title: 'Pravila privatnosti' }));
+
   return r;
 };

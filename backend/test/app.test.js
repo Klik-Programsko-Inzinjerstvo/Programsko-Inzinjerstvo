@@ -74,6 +74,7 @@ test('javne stranice rade bez prijave', async () => {
   assert.match(r.text, /Zagreb-Maksimir/);
   assert.match(r.text, /15\.5 °C/);
   assert.equal((await request(app).get('/prognoza')).status, 200);
+  assert.equal((await request(app).get('/privatnost')).status, 200);
   assert.deepEqual((await request(app).get('/zdravlje')).body, { status: 'ok', baza: true });
 });
 
