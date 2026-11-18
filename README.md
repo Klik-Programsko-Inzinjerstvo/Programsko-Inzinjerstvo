@@ -45,7 +45,7 @@ npm test
 
 Postavke (`.env`), postavljanje na Render i poznati nedostaci: [backend/README.md](backend/README.md).
 
-**Javna adresa:** _upisati nakon prvog deploya_
+**Javna adresa:** https://stormwatch-9c09.onrender.com (besplatni Render servis se nakon neaktivnosti budi do minute)
 
 ## Struktura repozitorija
 
