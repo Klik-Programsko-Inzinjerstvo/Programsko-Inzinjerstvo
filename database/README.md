@@ -7,6 +7,7 @@ Opis modela i ER dijagram: [docs/model-podataka.md](../docs/model-podataka.md).
 database/
 ├── migrations/     # SQL migracije (node-pg-migrate), izvršavaju se redom
 ├── seed/seed.sql   # testni podaci
+├── seed/demo.sql   # demo podaci za javnu bazu (ništa ne briše)
 ├── scripts/        # seed skripta
 └── src/            # pool konekcija i upiti za backend
 ```
@@ -29,6 +30,8 @@ database/
    ```bash
    npm run seed
    ```
+   Za javnu bazu (Render) postoji `seed/demo.sql`: dodaje prognozu, upozorenja i nekoliko prijava,
+   a stvarne postaje i mjerenja s DHMZ-a ne dira. Pokreće se ručno, npr. u Supabaseu → *SQL Editor*.
 
 Ostale naredbe:
 
