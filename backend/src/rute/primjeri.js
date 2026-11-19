@@ -1,13 +1,14 @@
 // Stranice čije tablice u bazi još ne postoje (događaji, lokacije, obavijesti,
-// statistika, moderacija, administracija). Do idućeg ciklusa prikazuju primjer
-// podatke iz frontendova mock.js uz vidljivu napomenu; prava i uloge se već provjeravaju.
+// statistika, moderacija). Do idućeg ciklusa prikazuju primjer podatke iz
+// frontendova mock.js uz vidljivu napomenu; prava i uloge se već provjeravaju.
+// Administracija već prikazuje stvarne korisnike iz baze.
 const express = require('express');
 const mock = require('../../../server/data/mock');
 const { trebaPrijavu, trebaUlogu } = require('../ovlasti');
 
 const primjer = { primjer: true };
 
-module.exports = function rutePrimjera() {
+module.exports = function rutePrimjera({ db }) {
   const r = express.Router();
   r.use(['/dogadaji', '/lokacije', '/obavijesti', '/statistika', '/moderacija', '/admin'], trebaPrijavu);
 
@@ -27,7 +28,15 @@ module.exports = function rutePrimjera() {
     res.render('moderacija', {
       title: 'Moderacija', cekanje: mock.prijave.filter((p) => ['predana', 'na čekanju'].includes(p.status)), ...primjer,
     }));
-  r.get('/admin', trebaUlogu('administrator'), (req, res) => res.render('admin', { title: 'Administracija', ...mock, ...primjer }));
+  r.get('/admin', trebaUlogu('administrator'), async (req, res) => {
+    const korisnici = (await db.korisnici()).map((k) => ({
+      ime: k.korisnicko_ime, email: k.email, uloga: k.uloga.replace(/_/g, ' '), bodovi: k.reputacija,
+    }));
+    res.render('admin', {
+      title: 'Administracija', korisnici,
+      primjer: 'Popis korisnika je iz baze. Promjena uloge, deaktivacija i postavke uvoza još se ne spremaju.',
+    });
+  });
 
   return r;
 };

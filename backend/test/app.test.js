@@ -10,6 +10,7 @@ const KORISNICI = {
   1: { id: 1, korisnicko_ime: 'ivana_k', email: 'ivana@example.com', uloga: 'pouzdani_motritelj', aktivan: true, reputacija: 240, kreiran: new Date('2026-10-01T10:00:00Z') },
   2: { id: 2, korisnicko_ime: 'marko_p', email: 'marko@example.com', uloga: 'korisnik', aktivan: true, reputacija: 55, kreiran: new Date('2026-10-02T10:00:00Z') },
   3: { id: 3, korisnicko_ime: 'blokiran', email: 'b@example.com', uloga: 'korisnik', aktivan: false, reputacija: 0, kreiran: new Date('2026-10-03T10:00:00Z') },
+  4: { id: 4, korisnicko_ime: 'admin', email: 'admin@example.com', uloga: 'administrator', aktivan: true, reputacija: 0, kreiran: new Date('2026-10-04T10:00:00Z') },
 };
 
 const PRIJAVA = {
@@ -126,6 +127,16 @@ test('uloge se provjeravaju na poslužitelju (403)', async () => {
   const agent = await prijavljen(app);
   assert.equal((await agent.get('/moderacija')).status, 403);
   assert.equal((await agent.get('/admin')).status, 403);
+});
+
+test('administracija prikazuje korisnike iz baze', async () => {
+  const { app } = aplikacija({ auth: lazniAuth('admin@example.com') });
+  const agent = await prijavljen(app);
+  const r = await agent.get('/admin');
+  assert.equal(r.status, 200);
+  assert.match(r.text, /marko@example\.com/);
+  assert.match(r.text, /<option selected>pouzdani motritelj<\/option>/);
+  assert.match(r.text, /Popis korisnika je iz baze/);
 });
 
 test('nova prijava: neispravan obrazac vraća 400 s porukama', async () => {
