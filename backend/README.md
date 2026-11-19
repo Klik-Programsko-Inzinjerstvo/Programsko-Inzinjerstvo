@@ -91,9 +91,12 @@ Svaki push na glavnu granu ponovno pokreće deploy. Pri pokretanju se izvršavaj
 
 ## Poznati nedostaci
 
-- Potvrde i osporavanja, komentari, događaji, obavijesti, omiljene lokacije, statistika i
-  moderacija još nemaju tablice u bazi. Te stranice prikazuju primjer podatke
+- Potvrde i osporavanja, komentari, događaji, obavijesti, omiljene lokacije i statistika
+  još nemaju tablice u bazi. Te stranice prikazuju primjer podatke
   (`server/data/mock.js`) uz vidljivu napomenu, a prava pristupa već se provjeravaju.
+- Moderacija (potvrda i odbijanje prijava) radi nad bazom, ali moderator zasad vidi prijave iz svih
+  regija jer baza još ne pamti za koje je regije moderator zadužen. Brisanje prijava i upozorenja
+  korisnicima još ne postoje.
 - Administracija prikazuje stvarne korisnike iz baze, ali promjena uloge i deaktivacija se još ne spremaju.
 - Prognoza prikazuje samo regiju *Zagreb i okolica* jer stranica još nema odabir regije
   (backend već prima `?regija=Slavonija`).

@@ -47,6 +47,7 @@ function napraviAplikaciju({ db, auth, slike, konfig }) {
   app.use(require('./rute/javno')({ db }));
   app.use(require('./rute/autentifikacija')({ db, auth, konfig }));
   app.use(require('./rute/prijave')({ db, slike }));
+  app.use(require('./rute/moderacija')({ db }));
   app.use(require('./rute/primjeri')({ db }));
 
   app.use((req, res) => res.status(404).render('greska', { title: 'Nije pronađeno', poruka: 'Stranica ne postoji.' }));

@@ -1,11 +1,19 @@
 <%- include('partials/head', { title }) %>
 <h1>Moderacija</h1>
-<p class="note">Prikazane su prijave na čekanju i prijavljeni sadržaj iz vaše regije.</p>
+<% if (locals.poruka) { %><p class="banner ok" role="status"><%= poruka %></p><% } %>
+<p class="note">Prijave koje čekaju odluku. Potvrđena prijava odmah se prikazuje na javnoj karti, a odbijenu vide samo autor i moderatori.</p>
+<% if (!cekanje.length) { %><p>Nema prijava na čekanju.</p><% } %>
 <ul class="reports">
   <% cekanje.forEach(p => { %>
-    <li class="report"><div class="row"><h2><%= p.vrsta %>, <%= p.mjesto %></h2><span class="badge"><%= p.status %></span></div>
-      <p><%= p.opis %></p><p class="meta"><%= p.vrijeme %> · <%= p.autor %></p>
-      <div class="row"><button class="btn small">Potvrdi</button><button class="btn ghost small">Odbij</button><button class="linklike">Izbriši</button></div></li>
+    <li class="report"><div class="row"><h2><a href="/prijave/<%= p.id %>"><%= p.vrsta %>, <%= p.mjesto %></a></h2><span class="badge"><%= p.status %></span></div>
+      <p><%= p.opis %></p><p class="meta"><%= p.vrijeme %> · <%= p.autor %><% if (p.regija) { %> · <%= p.regija %><% } %></p>
+      <div class="row">
+        <form method="post" action="/moderacija/<%= p.id %>/potvrdi"><button class="btn small">Potvrdi</button></form>
+        <form method="post" action="/moderacija/<%= p.id %>/odbij" class="row">
+          <input name="razlog" maxlength="300" placeholder="Razlog odbijanja (neobavezno)" aria-label="Razlog odbijanja">
+          <button class="btn ghost small">Odbij</button>
+        </form>
+      </div></li>
   <% }) %>
 </ul>
 <%- include('partials/foot') %>

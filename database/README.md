@@ -63,6 +63,7 @@ const korisnik = await db.korisnikIzGooglea({ sub, email, ime, slika }); // nako
 | `prijave({ ...filtri })` | prijave za kartu: vrsta, razdoblje, krug oko točke, samo potvrđene |
 | `prijava(id)`, `prijaveKorisnika(id)` | jedna prijava, prijave korisnika |
 | `spremiPrijavu({...})` | nova prijava sa slikama (FZ-06) |
+| `prijaveNaCekanju()`, `odluciOPrijavi(id, { potvrdi, razlog })` | moderacija: prijave koje čekaju, potvrda ili odbijanje (FZ-11) |
 | `korisnikIzGooglea({...})`, `korisnik(id)`, `korisnici()` | prijava preko Googlea (FZ-02), profil, popis korisnika |
 
 Koordinate se uvijek predaju kao `(lat, lng)`.

@@ -11,6 +11,7 @@ const KORISNICI = {
   2: { id: 2, korisnicko_ime: 'marko_p', email: 'marko@example.com', uloga: 'korisnik', aktivan: true, reputacija: 55, kreiran: new Date('2026-10-02T10:00:00Z') },
   3: { id: 3, korisnicko_ime: 'blokiran', email: 'b@example.com', uloga: 'korisnik', aktivan: false, reputacija: 0, kreiran: new Date('2026-10-03T10:00:00Z') },
   4: { id: 4, korisnicko_ime: 'admin', email: 'admin@example.com', uloga: 'administrator', aktivan: true, reputacija: 0, kreiran: new Date('2026-10-04T10:00:00Z') },
+  5: { id: 5, korisnicko_ime: 'mod_slavonija', email: 'mod@example.com', uloga: 'moderator', aktivan: true, reputacija: 0, kreiran: new Date('2026-10-05T10:00:00Z') },
 };
 
 const PRIJAVA = {
@@ -37,6 +38,9 @@ function lazniDb() {
     najblizaPostaja: async () => ({ ime: 'Osijek' }),
     mjerenjeUTrenutku: async () => ({ postaja: 'Osijek', udaljenost_km: 36.6, vrijeme: new Date('2026-07-14T15:30:00Z'), temperatura: 21.4, vlaga: 88, tlak: 1006.5, vjetar_smjer: 'Z', vjetar_brzina: 54 }),
     spremiPrijavu: async (podaci) => { db.spremljeno = podaci; return { id: 99, stanje: 'predana' }; },
+    odluka: null,
+    prijaveNaCekanju: async () => [{ ...PRIJAVA, id: 8, mjesto: 'Vuka', stanje: 'predana' }],
+    odluciOPrijavi: async (id, odluka) => { db.odluka = { id, ...odluka }; return id === 8; },
   };
   return db;
 }
@@ -137,6 +141,37 @@ test('administracija prikazuje korisnike iz baze', async () => {
   assert.match(r.text, /marko@example\.com/);
   assert.match(r.text, /<option selected>pouzdani motritelj<\/option>/);
   assert.match(r.text, /Popis korisnika je iz baze/);
+});
+
+test('moderator potvrđuje i odbija prijave na čekanju', async () => {
+  const { app, db } = aplikacija({ auth: lazniAuth('mod@example.com') });
+  const agent = await prijavljen(app);
+  const r = await agent.get('/moderacija');
+  assert.equal(r.status, 200);
+  assert.match(r.text, /Vuka/);
+  assert.match(r.text, /action="\/moderacija\/8\/potvrdi"/);
+
+  const potvrda = await agent.post('/moderacija/8/potvrdi');
+  assert.equal(potvrda.status, 302);
+  assert.equal(potvrda.headers.location, '/moderacija');
+  assert.deepEqual(db.odluka, { id: 8, potvrdi: true, razlog: null });
+  assert.match((await agent.get('/moderacija')).text, /Prijava je potvrđena/);
+
+  await agent.post('/moderacija/8/odbij').type('form').send({ razlog: '  Duplikat  ' });
+  assert.deepEqual(db.odluka, { id: 8, potvrdi: false, razlog: 'Duplikat' });
+
+  await agent.post('/moderacija/9/potvrdi');
+  assert.match((await agent.get('/moderacija')).text, /već odlučeno/);
+  assert.equal((await agent.post('/moderacija/abc/potvrdi')).status, 404);
+  assert.equal((await agent.post('/moderacija/8/obrisi')).status, 404);
+});
+
+test('obični korisnik ne može potvrditi prijavu', async () => {
+  const { app, db } = aplikacija();
+  assert.equal((await request(app).post('/moderacija/8/potvrdi')).status, 401);
+  const agent = await prijavljen(app);
+  assert.equal((await agent.post('/moderacija/8/potvrdi')).status, 403);
+  assert.equal(db.odluka, null, 'ništa se ne mijenja');
 });
 
 test('nova prijava: neispravan obrazac vraća 400 s porukama', async () => {
