@@ -1,16 +1,15 @@
 // Stranice čije tablice u bazi još ne postoje (događaji, lokacije, obavijesti,
-// statistika). Do idućeg ciklusa prikazuju primjer podatke iz frontendova mock.js
-// uz vidljivu napomenu; prava i uloge se već provjeravaju.
-// Administracija već prikazuje stvarne korisnike iz baze.
+// statistika, moderacija, administracija). Do idućeg ciklusa prikazuju primjer
+// podatke iz frontendova mock.js uz vidljivu napomenu; prava i uloge se već provjeravaju.
 const express = require('express');
 const mock = require('../../../server/data/mock');
 const { trebaPrijavu, trebaUlogu } = require('../ovlasti');
 
 const primjer = { primjer: true };
 
-module.exports = function rutePrimjera({ db }) {
+module.exports = function rutePrimjera() {
   const r = express.Router();
-  r.use(['/dogadaji', '/lokacije', '/obavijesti', '/statistika', '/admin'], trebaPrijavu);
+  r.use(['/dogadaji', '/lokacije', '/obavijesti', '/statistika', '/moderacija', '/admin'], trebaPrijavu);
 
   r.get('/dogadaji/:id', (req, res) => {
     const d = mock.dogadaji.find((x) => x.id === Number(req.params.id));
@@ -24,15 +23,11 @@ module.exports = function rutePrimjera({ db }) {
     const redovi = mock.statistika.poRegijama.map(([regija, n]) => `${regija};${n}`).join('\n');
     res.type('text/csv').send(`regija;broj_prijava\n${redovi}`);
   });
-  r.get('/admin', trebaUlogu('administrator'), async (req, res) => {
-    const korisnici = (await db.korisnici()).map((k) => ({
-      ime: k.korisnicko_ime, email: k.email, uloga: k.uloga.replace(/_/g, ' '), bodovi: k.reputacija,
+  r.get('/moderacija', trebaUlogu('moderator', 'administrator'), (req, res) =>
+    res.render('moderacija', {
+      title: 'Moderacija', cekanje: mock.prijave.filter((p) => ['predana', 'na čekanju'].includes(p.status)), ...primjer,
     }));
-    res.render('admin', {
-      title: 'Administracija', korisnici,
-      primjer: 'Popis korisnika je iz baze. Promjena uloge, deaktivacija i postavke uvoza još se ne spremaju.',
-    });
-  });
+  r.get('/admin', trebaUlogu('administrator'), (req, res) => res.render('admin', { title: 'Administracija', ...mock, ...primjer }));
 
   return r;
 };

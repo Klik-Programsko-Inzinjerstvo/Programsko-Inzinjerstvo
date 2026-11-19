@@ -189,28 +189,6 @@ async function prijaveKorisnika(korisnikId) {
   return rows;
 }
 
-/** Prijave koje čekaju odluku moderatora (FZ-11), najnovije prve. */
-async function prijaveNaCekanju() {
-  const { rows } = await pool.query(`
-    SELECT ${PRIJAVA_POLJA} ${PRIJAVA_JOIN}
-    WHERE p.stanje IN ('predana', 'na_cekanju')
-    ORDER BY p.kreirana DESC`);
-  return rows;
-}
-
-/**
- * Odluka moderatora: potvrda ili odbijanje (uz neobavezan razlog) prijave koja još čeka.
- * Vraća false ako prijava ne postoji ili je o njoj već odlučeno.
- */
-async function odluciOPrijavi(id, { potvrdi, razlog = null }) {
-  const { rowCount } = await pool.query(`
-    UPDATE prijava
-    SET stanje = $2, razlog_odbijanja = $3, azurirana = now()
-    WHERE id = $1 AND stanje IN ('predana', 'na_cekanju')`,
-  [id, potvrdi ? 'potvrdena' : 'odbijena', potvrdi ? null : razlog]);
-  return rowCount === 1;
-}
-
 /**
  * Sprema novu prijavu nevremena sa slikama (FZ-06).
  * - regija se određuje prema najbližoj postaji
@@ -307,6 +285,6 @@ async function korisnici() {
 module.exports = {
   zadnjaMjerenja, najblizaPostaja, mjerenjeUTrenutku, aktivnaUpozorenja, prognoze, spremiMjerenjaDhmz,
   vrstePojava, regije,
-  prijave, prijava, prijaveKorisnika, spremiPrijavu, prijaveNaCekanju, odluciOPrijavi,
+  prijave, prijava, prijaveKorisnika, spremiPrijavu,
   korisnikIzGooglea, korisnik, korisnici,
 };
