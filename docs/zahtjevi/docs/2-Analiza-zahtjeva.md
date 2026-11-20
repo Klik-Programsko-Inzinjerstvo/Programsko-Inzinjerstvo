@@ -75,21 +75,21 @@
 
 | ID zahtjeva | Obrazac uporabe / modul | Arhitekturna realizacija | Ispitivanje ili provjera |
 |---|---|---|---|
-| FZ-01 | UC1, UC5, UC6 | Modul karte i pregleda prijava | Na čekanju – nisu definirani ispitni slučajevi. |
-| FZ-02 | UC2, UC3 | Modul autentifikacije; Google OAuth 2.0 | Na čekanju – nisu definirani ispitni slučajevi. |
-| FZ-03 | Automatizirani proces sustava | Modul za dohvat DHMZ podataka | Na čekanju – nisu definirani ispitni slučajevi. |
-| FZ-04 | UC1 | Modul karte i filtara | Na čekanju – nisu definirani ispitni slučajevi. |
-| FZ-05 | --- | Modul korisničkog profila | Na čekanju – funkcionalnost nije razrađena. |
-| FZ-06 | UC4 | Modul prijave opažanja nevremena | Na čekanju – nisu definirani ispitni slučajevi. |
-| FZ-07 | UC7, UC8 | Modul komentara i glasovanja | Na čekanju – nisu definirani ispitni slučajevi. |
-| FZ-08 | UC4, UC7, UC9, UC10 | Modul ocjene vjerodostojnosti i reputacije | Na čekanju – nisu definirani ispitni slučajevi. |
-| FZ-09 | UC11 | Modul grupiranja prijava u događaje | Na čekanju – nisu definirani ispitni slučajevi. |
-| FZ-10 | --- | Modul praćenja i obavijesti | Na čekanju – funkcionalnost nije razrađena. |
-| FZ-11 | UC9 | Modul moderacije prijava | Na čekanju – nisu definirani ispitni slučajevi. |
-| FZ-12 | UC4, UC7, UC10 | Modul korisničkih uloga i pouzdanih motritelja | Na čekanju – nisu definirani ispitni slučajevi. |
-| FZ-13 | --- | Modul stručnih komentara meteorologa | Na čekanju – funkcionalnost nije razrađena. |
-| FZ-14 | --- | Modul statistike i izvoza podataka | Na čekanju – funkcionalnost nije razrađena. |
-| FZ-15 | UC10 | Modul administracije korisnika i uloga | Na čekanju – nisu definirani ispitni slučajevi. |
+| FZ-01 | UC1, UC5, UC6 | Modul karte i pregleda prijava | --- |
+| FZ-02 | UC2, UC3 | Modul autentifikacije; Google OAuth 2.0 | --- |
+| FZ-03 | Automatizirani proces sustava | Modul za dohvat DHMZ podataka | --- |
+| FZ-04 | UC1 | Modul karte i filtara | --- |
+| FZ-05 | --- | Modul korisničkog profila | --- |
+| FZ-06 | UC4 | Modul prijave opažanja nevremena | --- |
+| FZ-07 | UC7, UC8 | Modul komentara i glasovanja | --- |
+| FZ-08 | UC4, UC7, UC9, UC10 | Modul ocjene vjerodostojnosti i reputacije | --- |
+| FZ-09 | UC11 | Modul grupiranja prijava u događaje | --- |
+| FZ-10 | --- | Modul praćenja i obavijesti | --- |
+| FZ-11 | UC9 | Modul moderacije prijava | --- |
+| FZ-12 | UC4, UC7, UC10 | Modul korisničkih uloga i pouzdanih motritelja | --- |
+| FZ-13 | --- | Modul stručnih komentara meteorologa | --- |
+| FZ-14 | --- | Modul statistike i izvoza podataka | --- |
+| FZ-15 | UC10 | Modul administracije korisnika i uloga | --- |
 | NFZ-01 | UC1–UC10 | Korisničko sučelje | Provjera responzivnosti na različitim uređajima. |
 | NFZ-02 | UC1 | Modul karte i automatskog osvježavanja | Provjera osvježavanja karte svakih 20 sekundi. |
 | NFZ-03 | FZ-03, automatizirani proces sustava | Modul dohvaćanja i pohrane meteoroloških podataka | Provjera rada aplikacije pri nedostupnosti DHMZ-a. |
