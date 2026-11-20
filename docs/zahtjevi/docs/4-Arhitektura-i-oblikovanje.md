@@ -158,7 +158,7 @@ Prijava je povezana s autorom i može biti pridružena događaju. Događaj može
 **Dijagram razreda:**
 
 ![Dijagram razreda StormWatch](../../dijagrami/slike/dijagram-razreda.png)
-**PlantUML izvor:** [izvor](../../dijagrami/src/dijagram-src.puml)
+**PlantUML izvor:** [izvor](../../dijagrami/src/dijagram-razreda.puml)
 
 ## 4.4 Ponašanje tijekom izvođenja
 
