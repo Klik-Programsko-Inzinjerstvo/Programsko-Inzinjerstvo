@@ -37,6 +37,3 @@ Nakon teškog grmljavinskog nevremena s tučom, korisnik će možda morati provj
 Predloženi prikaz na karti u StormWatchu objedinjuje prijave kriznih događaja relevantne za odabranu lokaciju.
 Aplikacija ne zamjenjuje službena upozorenja ni hitne službe.
 
----
-
->**Završna provjera:** Opis problema, cilj projekta, korisnici i dionici, granice opsega te postojeći pristupi međusobno su usklađeni. Navedene koristi ne predstavljaju neprovjerene tvrdnje, a uključene i izostavljene funkcionalnosti odgovaraju odobrenom projektnom zadatku.
