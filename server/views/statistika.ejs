@@ -1,0 +1,10 @@
+<%- include('partials/head', { title }) %>
+<div class="row"><h1>Statistika</h1><a class="btn ghost" href="/statistika.csv" download>Izvezi CSV</a></div>
+<% const mx = Math.max(...statistika.poRegijama.map(r => r[1])); const mm = Math.max(...statistika.poMjesecima.map(r => r[1])); %>
+<h2>Prijave po regijama</h2>
+<ul class="bars"><% statistika.poRegijama.forEach(([r, n]) => { %><li><span><%= r %></span><i style="width:<%= n / mx * 100 %>%"></i><b><%= n %></b></li><% }) %></ul>
+<h2>Prijave po mjesecima</h2>
+<ul class="bars"><% statistika.poMjesecima.forEach(([r, n]) => { %><li><span><%= r %></span><i style="width:<%= n / mm * 100 %>%"></i><b><%= n %></b></li><% }) %></ul>
+<h2>Arhiva događaja</h2>
+<ul class="plain"><% dogadaji.forEach(d => { %><li><a href="/dogadaji/<%= d.id %>"><%= d.naziv %></a> <span class="meta"><%= d.regija %></span></li><% }) %></ul>
+<%- include('partials/foot') %>
