@@ -1,0 +1,44 @@
+@startuml
+skinparam shadowing false
+skinparam defaultFontName DejaVu Sans
+skinparam backgroundColor white
+skinparam roundcorner 8
+skinparam ArrowColor #14213d
+skinparam ActorBorderColor #14213d
+skinparam sequenceMessageAlign left
+left to right direction
+skinparam packageStyle rectangle
+actor "Neregistrirani\nkorisnik" as G
+actor "Registrirani\nkorisnik" as U
+actor "Moderator" as M
+actor "Administrator" as A
+actor "Google\n(OpenID Connect)" as GO
+U -|> G
+M -|> U
+A -|> M
+rectangle "StormWatch" {
+  usecase "UC1 Pregled karte\npotvrđenih prijava" as UC1
+  usecase "UC2 Prijava Google računom" as UC2
+  usecase "UC3 Odjava" as UC3
+  usecase "UC4 Prijava opažanja\nnevremena" as UC4
+  usecase "UC5 Pregled prijava\n(sve / moje)" as UC5
+  usecase "UC6 Pregled prijave\ni događaja" as UC6
+  usecase "UC7 Potvrda ili osporavanje\nprijave" as UC7
+  usecase "UC8 Komentiranje prijave" as UC8
+  usecase "UC9 Moderacija prijava" as UC9
+  usecase "UC10 Upravljanje ulogama\nkorisnika" as UC10
+  usecase "UC11 Grupiranje prijava\nu događaj" as UC11
+}
+G --> UC1
+G --> UC2
+G --> UC6
+U --> UC3
+U --> UC4
+U --> UC5
+U --> UC7
+U --> UC8
+M --> UC9
+A --> UC10
+UC4 ..> UC11 : <<include>>
+UC2 --> GO
+@enduml
