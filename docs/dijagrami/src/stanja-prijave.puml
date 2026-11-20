@@ -1,0 +1,29 @@
+@startuml
+skinparam shadowing false
+skinparam defaultFontName DejaVu Sans
+skinparam backgroundColor white
+skinparam roundcorner 8
+skinparam ArrowColor #14213d
+skinparam ActorBorderColor #14213d
+skinparam sequenceMessageAlign left
+title Dijagram stanja prijave
+[*] --> Predana : korisnik šalje prijavu
+state Predana
+state "Na čekanju\n(pending)" as Pending
+state "Potvrđena\n(confirmed)" as Confirmed
+state "Odbijena\n(rejected)" as Rejected
+Predana --> Pending : autor je običan korisnik
+Predana --> Confirmed : autor je pouzdani motritelj,\nmoderator, meteorolog ili admin
+Pending --> Confirmed : moderator potvrdi
+Pending --> Rejected : moderator odbije uz obrazloženje
+Confirmed --> [*]
+Rejected --> [*]
+note right of Rejected
+  Vidljiva samo autoru,
+  moderatorima i administratorima
+end note
+note right of Predana
+  Prijelazno stanje, ne sprema se u bazu:
+  prijava se odmah sprema kao pending ili confirmed
+end note
+@enduml

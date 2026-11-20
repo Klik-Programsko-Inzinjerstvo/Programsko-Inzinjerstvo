@@ -1,0 +1,67 @@
+@startuml
+skinparam shadowing false
+skinparam defaultFontName DejaVu Sans
+skinparam backgroundColor white
+skinparam roundcorner 8
+skinparam sequenceMessageAlign left
+skinparam ArrowColor #14213d
+
+autonumber
+actor "Registrirani korisnik" as User
+participant "Preglednik" as Browser
+participant "Express aplikacija\nsrc/app.js" as App
+participant "requireLogin\nsrc/middleware.js" as Auth
+participant "Ruta prijava\nsrc/routes/reports.js" as Reports
+participant "Domain\nsrc/domain.js" as Domain
+database "PostgreSQL\nsrc/db.js" as DB
+
+User -> Browser: Ispunjava i predaje obrazac
+Browser -> App: POST /reports
+App -> Auth: Provjeri korisničku sesiju
+
+alt Korisnik nije prijavljen
+  Auth --> Browser: Preusmjeravanje na prijavu
+else Korisnik je prijavljen
+  Auth -> Reports: Nastavi obradu zahtjeva
+  Reports -> Domain: validateReport(body, now)
+  Domain --> Reports: Rezultat validacije
+
+  alt Podaci nisu valjani
+    Reports --> Browser: Obrazac s porukama o pogreškama
+  else Podaci su valjani
+    Reports -> DB: Dohvati vezu / klijenta baze
+    Reports -> DB: BEGIN
+    Reports -> DB: Dohvati postojeće događaje kandidate
+    DB --> Reports: Popis događaja
+    Reports -> Domain: findMatchingEvent(report, events, opts)
+    Domain --> Reports: Najbliži odgovarajući događaj ili null
+    Reports -> Domain: isTrusted(user.role)
+    Domain --> Reports: true / false
+
+    alt Odgovarajući događaj postoji
+      Reports -> Reports: Odaberi ID postojećeg događaja
+    else Događaj ne postoji
+      Reports -> DB: INSERT novi događaj
+      DB --> Reports: ID novog događaja
+    end
+
+    alt Autor ima pouzdanu ulogu
+      Reports -> DB: INSERT prijavu s event_id i statusom confirmed
+    else Autor nema pouzdanu ulogu
+      Reports -> DB: INSERT prijavu s event_id i statusom pending
+    end
+
+    alt Pohrana je uspješna
+      Reports -> DB: COMMIT
+      DB --> Reports: Transakcija potvrđena
+      Reports --> Browser: Odgovor o uspješnom spremanju
+      Browser --> User: Prikaz spremljene prijave / potvrde
+    else Pogreška pri pohrani
+      Reports -> DB: ROLLBACK
+      DB --> Reports: Transakcija poništena
+      Reports --> Browser: Odgovor o pogrešci
+      Browser --> User: Obavijest o neuspješnom spremanju
+    end
+  end
+end
+@enduml
