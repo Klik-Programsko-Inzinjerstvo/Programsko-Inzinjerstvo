@@ -1,0 +1,9 @@
+<%- include('partials/head', { title }) %>
+<h1>Profil</h1>
+<p class="meta">Uloga: <%= user.uloga %></p>
+<form class="form narrow" onsubmit="return false">
+  <label>Fotografija <input type="file" accept="image/*"></label>
+  <label>Kratak opis <textarea rows="3"></textarea></label>
+  <button class="btn">Spremi profil</button>
+</form>
+<%- include('partials/foot') %>

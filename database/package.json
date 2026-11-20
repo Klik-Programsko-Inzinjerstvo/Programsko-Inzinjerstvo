@@ -1,0 +1,16 @@
+{
+  "name": "stormwatch-database",
+  "version": "0.1.0",
+  "private": true,
+  "description": "PostgreSQL + PostGIS shema, migracije, testni podaci i upiti za StormWatch",
+  "main": "src/index.js",
+  "scripts": {
+    "migrate": "node-pg-migrate -j sql -m migrations",
+    "seed": "node scripts/seed.js"
+  },
+  "dependencies": {
+    "dotenv": "18.0.9",
+    "node-pg-migrate": "9.0.0",
+    "pg": "8.23.1"
+  }
+}

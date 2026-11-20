@@ -1,0 +1,32 @@
+<%- include('partials/head', { title }) %>
+<% if (locals.poruka) { %><p class="banner ok" role="status"><%= poruka %></p><% } %>
+<div class="row"><h1><%= p.vrsta %>, <%= p.mjesto %></h1><span class="badge"><%= p.status %></span></div>
+<% if (p.razlogOdbijanja) { %><p class="warn lvl-crvena"><strong>Odbijena:</strong> <span><%= p.razlogOdbijanja %></span></p><% } %>
+<article class="report <%= p.status === 'potvrđena' ? 'confirmed' : '' %>">
+  <% if (p.opis) { %><p><%= p.opis %></p><% } %>
+  <p class="meta"><%= p.vrijeme %> · <%= p.autor %><% if (p.pouzdan) { %> <span class="badge trusted">pouzdani motritelj</span><% } %><% if (p.regija) { %> · <%= p.regija %><% } %></p>
+  <% if (p.intenzitet) { %><p class="meta">Intenzitet: <%= p.intenzitet %></p><% } %>
+  <% if (p.steta) { %><p class="meta">Procjena štete: <%= p.steta %></p><% } %>
+  <div class="row">
+    <div class="cred" title="Vjerodostojnost <%= p.vjerodostojnost %> %"><span style="width:<%= p.vjerodostojnost %>%"></span></div>
+    <span class="meta">vjerodostojnost <%= p.vjerodostojnost %> %</span>
+  </div>
+</article>
+<% if (p.slike.length) { %>
+  <div class="photos"><% p.slike.forEach(url => { %><a href="<%= url %>"><img src="<%= url %>" alt="Fotografija uz prijavu" loading="lazy"></a><% }) %></div>
+<% } %>
+<section class="card">
+  <h2>Službeno mjerenje s najbliže postaje</h2>
+  <% if (!mjerenje) { %>
+    <p class="note">Nema mjerne postaje u bazi.</p>
+  <% } else if (!mjerenje.postoji) { %>
+    <p class="note">Postaja <%= mjerenje.postaja %> (<%= mjerenje.udaljenostKm %> km) nema mjerenje unutar 3 sata prije opažanja.</p>
+  <% } else { %>
+    <p class="big"><%= mjerenje.temp %> °C</p>
+    <p class="meta">postaja <%= mjerenje.postaja %>, <%= mjerenje.udaljenostKm %> km od prijave · mjerenje u <%= mjerenje.vrijeme %></p>
+    <p class="meta">vlaga <%= mjerenje.vlaga %> % · tlak <%= mjerenje.tlak %> hPa · vjetar <%= mjerenje.vjetarSmjer %> <%= mjerenje.vjetarBrzina %> km/h</p>
+  <% } %>
+  <p class="note">Izvor: Državni hidrometeorološki zavod (DHMZ).</p>
+</section>
+<p><a href="/prijave">← Sve prijave</a></p>
+<%- include('partials/foot') %>

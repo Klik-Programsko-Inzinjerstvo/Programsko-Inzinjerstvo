@@ -1,0 +1,15 @@
+{
+  "name": "stormwatch",
+  "version": "0.1.0",
+  "private": true,
+  "description": "StormWatch – Programsko inženjerstvo, FER 2026./2027., G08, tim Klik",
+  "engines": {
+    "node": "24.x"
+  },
+  "scripts": {
+    "build": "npm ci --prefix database && npm ci --prefix backend",
+    "migrate": "npm run migrate --prefix database -- up",
+    "start": "npm start --prefix backend",
+    "test": "npm test --prefix backend"
+  }
+}

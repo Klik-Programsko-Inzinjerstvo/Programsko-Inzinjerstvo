@@ -1,0 +1,26 @@
+# Render Blueprint: dashboard.render.com → New → Blueprint → odaberi ovaj repozitorij.
+# Vrijednosti označene sa sync: false upisuju se ručno pri prvom postavljanju
+# (upute: backend/README.md, odjeljak "Postavljanje na Render").
+services:
+  - type: web
+    name: stormwatch
+    runtime: node
+    plan: free
+    region: frankfurt
+    buildCommand: npm run build
+    # migracije se izvršavaju pri svakom pokretanju; već izvršene se preskaču
+    startCommand: npm run migrate && npm start
+    healthCheckPath: /zdravlje
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: CLOUDINARY_URL
+        sync: false
