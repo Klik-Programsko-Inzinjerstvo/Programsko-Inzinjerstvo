@@ -139,7 +139,7 @@ Generalizacija aktera: registrirani korisnik nasljeđuje ovlasti neregistriranog
 
 | **Provjera** | **Rezultat provjere** |
 |---|---|
-| Zahtjevi | Svaki obrazac uporabe pobezan je s odgovarajućim funkcijskim zahtjevom. |
+| Zahtjevi | Svaki obrazac uporabe povezan je s odgovarajućim funkcijskim zahtjevom. |
 | Akteri | Akteri odgovaraju definiranim ulogama korisnika i njihovim ovlastima. |
 | Aplikacija | Glavni i alternativni tijekovi mogu se provjeriti odgovarajućim ispitnim slučajevima. |
 
