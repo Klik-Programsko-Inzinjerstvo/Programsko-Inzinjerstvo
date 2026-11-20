@@ -29,7 +29,7 @@ Generalizacija aktera: registrirani korisnik nasljeđuje ovlasti neregistriranog
 | Preduvjeti, ako postoje | Korisnik ima Google račun. |
 | Glavni tijek | 1. Korisnik bira opciju „Prijavi se s Googleom”. 2. Sustav preusmjerava korisnika na Google uz parametre `client_id`, `scope` i `state`. 3. Korisnik se prijavljuje i odobrava pristup. 4. Google vraća korisnika s autorizacijskim kodom (`code`). 5. Sustav zamjenjuje kod za tokene i dohvaća profil. 6. Sustav stvara ili ažurira korisnika prema identifikatoru `google_sub`. 7. Sustav započinje korisničku sesiju. |
 | Alternativni ili neuspješni tijekovi, ako postoje | Korisnik odbije pristup ili parametar `state` nije ispravan. Sustav vraća korisnika na stranicu za prijavu. |
-| Rezultat | Korisnik je prijavljen u aplikaciju. Pri prvoj prijavi nastaje račun s ulogom `user`, odnosno `admin` ako se njegova adresa e-pošte nalazi u `ADMIN_EMAILS`. |
+| Rezultat | Korisnik je prijavljen u aplikaciju. Pri prvoj prijavi nastaje račun s ulogom `user`, odnosno `admin` ako se njegova adresa e-pošte nalazi u admin e-mail adresama. |
 
 ### UC3 – Odjava
 
@@ -84,7 +84,7 @@ Generalizacija aktera: registrirani korisnik nasljeđuje ovlasti neregistriranog
 | Preduvjeti, ako postoje | Prijava nije odbijena, a korisnik nije njezin autor. |
 | Glavni tijek | 1. Korisnik otvara prijavu. 2. Odabire opciju „I ja to vidim” ili „Kod mene nije tako”. 3. Sustav sprema korisnikov glas. 4. Sustav provjerava postoji li već glas tog korisnika za prijavu. 5. Ako glas postoji, sustav ažurira postojeći glas. 6. Sustav ponovno izračunava ocjenu vjerodostojnosti. 7. Sustav prikazuje novu ocjenu korisniku. |
 | Alternativni ili neuspješni tijekovi, ako postoje | Korisnik ne može glasati za vlastitu prijavu niti za prijavu koja je odbijena. Ako promijeni prethodni glas, sustav ažurira postojeći glas umjesto stvaranja novog. |
-| Rezultat | Korisnikov glas je spremljen ili ažuriran, a ocjena vjerodostojnosti prijave ponovno je izračunata. Glas pouzdanog motritelja ima težinu 2, a glas ostalih korisnika težinu 1. |
+| Rezultat | Korisnikov glas je spremljen ili ažuriran, a ocjena vjerodostojnosti prijave ponovno je izračunata. |
 
 ### UC8 – Komentiranje prijave
 
@@ -105,9 +105,9 @@ Generalizacija aktera: registrirani korisnik nasljeđuje ovlasti neregistriranog
 | Sekundarni akter | Administrator. |
 | ID zahtjeva | TBD |
 | Preduvjeti, ako postoje | Korisnik ima ulogu moderatora ili administratora. U sustavu postoje prijave koje čekaju moderaciju. |
-| Glavni tijek | 1. Moderator otvara stranicu „Moderacija”. 2. Sustav prikazuje prijave na čekanju. 3. Moderator odabire prijavu. 4. Moderator odlučuje hoće li prijavu potvrditi ili odbiti. 5. Ako potvrdi prijavu, sustav mijenja njezin status u `potvrđena` i autoru dodjeljuje 10 bodova. 6. Ako odbije prijavu, moderator unosi obavezno obrazloženje, sustav mijenja status u `odbijena` i autoru oduzima 5 bodova. |
+| Glavni tijek | 1. Moderator otvara stranicu „Moderacija”. 2. Sustav prikazuje prijave na čekanju. 3. Moderator odabire prijavu. 4. Moderator odlučuje hoće li prijavu potvrditi ili odbiti. 5. Ako potvrdi prijavu, sustav mijenja njezin status u `potvrđena` i autoru dodjeljuje 10 bodova. 6. Ako odbije prijavu, moderator unosi obavezno obrazloženje, sustav mijenja status u `odbijena` i autoru smanjuje kredibilitet. |
 | Alternativni ili neuspješni tijekovi, ako postoje | Ako moderator pokuša odbiti prijavu bez obrazloženja, sustav ne dopušta dovršetak odbijanja. |
-| Rezultat | Prijava je potvrđena ili odbijena, a reputacija autora ažurirana je za odgovarajući broj bodova. U prvoj inačici moderator vidi prijave svih regija. |
+| Rezultat | Prijava je potvrđena ili odbijena, a reputacija autora je ažurirana. U prvoj inačici moderator vidi prijave svih regija. |
 
 ### UC10 – Upravljanje ulogama korisnika
 
@@ -116,7 +116,7 @@ Generalizacija aktera: registrirani korisnik nasljeđuje ovlasti neregistriranog
 | Primarni akter | Administrator. |
 | ID zahtjeva | TBD |
 | Preduvjeti, ako postoje | Administrator je prijavljen u aplikaciju i ima odgovarajuća administratorska prava. |
-| Glavni tijek | 1. Administrator otvara stranicu „Administracija”. 2. Sustav prikazuje popis korisnika. 3. Administrator odabire korisnika kojem želi promijeniti ulogu. 4. Sustav prikazuje korisnikovu reputaciju i oznaku kandidata za pouzdanog motritelja ako ima najmanje 50 bodova. 5. Administrator odabire novu ulogu korisnika. 6. Sustav sprema promjenu uloge. |
+| Glavni tijek | 1. Administrator otvara stranicu „Administracija”. 2. Sustav prikazuje popis korisnika. 3. Administrator odabire korisnika kojem želi promijeniti ulogu. 4. Sustav prikazuje korisnikovu reputaciju i oznaku kandidata za pouzdanog motritelja ako ima određenu količinu reputacije. 5. Administrator odabire novu ulogu korisnika. 6. Sustav sprema promjenu uloge. |
 | Alternativni ili neuspješni tijekovi, ako postoje | Administrator ne može promijeniti vlastitu ulogu. Korisnik s najmanje 50 bodova označava se kao kandidat za pouzdanog motritelja. |
 | Rezultat | Uloga odabranog korisnika uspješno je promijenjena, a njegova reputacija i status kandidata za pouzdanog motritelja prikazani su administratoru. |
 
