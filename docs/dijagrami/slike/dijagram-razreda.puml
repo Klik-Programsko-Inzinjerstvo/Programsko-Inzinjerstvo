@@ -1,0 +1,144 @@
+
+@startuml
+skinparam shadowing false
+skinparam defaultFontName DejaVu Sans
+skinparam backgroundColor white
+skinparam roundcorner 8
+skinparam ArrowColor #14213d
+skinparam ClassBorderColor #14213d
+skinparam classAttributeIconSize 0
+
+hide empty members
+
+enum Role {
+  user
+  trusted
+  moderator
+  meteorolog
+  admin
+}
+
+enum ReportStatus {
+  pending
+  confirmed
+  rejected
+}
+
+enum ReportType {
+  tuca
+  olujni_vjetar
+  kisa_poplava
+  snijeg
+  poledica
+  pijavica
+}
+
+enum HailSize {
+  grasak
+  ljesnjak
+  orah
+  jaje
+}
+
+enum Damage {
+  nema
+  mala
+  srednja
+  velika
+}
+
+class User {
+  +id : int
+  +googleSub : string
+  +email : string
+  +name : string
+  +role : Role
+  +reputation : int
+  +createdAt : timestamp
+}
+
+class Event {
+  +id : int
+  +type : ReportType
+  +lat : double
+  +lng : double
+  +place : string
+  +startedAt : timestamp
+  +lastObservedAt : timestamp
+}
+
+class Report {
+  +id : int
+  +type : ReportType
+  +lat : double
+  +lng : double
+  +place : string
+  +observedAt : timestamp
+  +intensity : HailSize
+  +damage : Damage
+  +description : string
+  +status : ReportStatus
+  +rejectReason : string
+  +createdAt : timestamp
+}
+
+class Vote {
+  +value : int
+  +weight : int
+}
+
+class Comment {
+  +id : int
+  +body : string
+  +createdAt : timestamp
+}
+
+' Povezanost korisnika i prijava
+User "1" -- "0..*" Report : autor
+
+' Grupiranje prijava u događaje
+Event "1" -- "1..*" Report : grupira
+
+' Glasanje korisnika
+Report "1" -- "0..*" Vote : glasovi
+User "1" -- "0..*" Vote : glasa
+
+' Komentiranje prijava
+Report "1" -- "0..*" Comment : komentari
+User "1" -- "0..*" Comment : autor
+
+' Enumeracije
+User --> Role
+Report --> ReportStatus
+Report --> ReportType
+Event --> ReportType
+Report --> HailSize
+Report --> Damage
+
+note right of Vote
+  Primarni ključ:
+  (report_id, user_id)
+
+  value:
+  +1 = potvrda
+  -1 = osporavanje
+
+  weight:
+  1 = običan korisnik
+  2 = pouzdani motritelj
+end note
+
+note bottom of Report
+  Poslovna pravila implementirana su
+  kao čiste funkcije u src/domain.js:
+
+  validateReport()
+  findMatchingEvent()
+  credibilityScore()
+  haversineKm()
+  isTrusted()
+
+  Domain nije zasebna klasa.
+end note
+
+@enduml
