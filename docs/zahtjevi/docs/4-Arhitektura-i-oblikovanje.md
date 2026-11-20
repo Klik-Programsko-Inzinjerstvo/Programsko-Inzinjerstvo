@@ -158,6 +158,7 @@ Prijava je povezana s autorom i može biti pridružena događaju. Događaj može
 **Dijagram razreda:**
 
 ![Dijagram razreda StormWatch](../../dijagrami/slike/dijagram-razreda.png)
+
 **PlantUML izvor:** [izvor](../../dijagrami/src/dijagram-razreda.puml)
 
 ## 4.4 Ponašanje tijekom izvođenja
@@ -165,6 +166,7 @@ Prijava je povezana s autorom i može biti pridružena događaju. Događaj može
 ### 4.4.1 Reprezentativni UML sekvencijski dijagram
 
 ![Sekvencijski dijagram prijave Googleom](../../dijagrami/slike/sekvencijski-dijagram.png)
+
 **PlantUML izvor:** [izvor](../../dijagrami/src/sekvencijski-dijagram.puml)
 
 ### 4.4.2 Reprezentativni UML dijagram stanja
@@ -174,6 +176,7 @@ Vlasnik stanja je domenski objekt **prijava opažanja nevremena**. Status prijav
 **Dijagram stanja:**
 
 ![Dijagram stanja prijave](../../dijagrami/slike/stanja-prijave.png)
+
 **PlantUML izvor:** [izvor](../../dijagrami/src/stanja-prijave.puml)
 
 Prijava pri stvaranju dobiva početni status `pending` ili `confirmed`. Prijave korisnika koji imaju ulogu pouzdanog motritelja, moderatora, meteorologa ili administratora odmah su potvrđene; ostale čekaju moderaciju. Moderator ili administrator može prijavu na čekanju potvrditi ili odbiti. U dostavljenom opisu nisu navedeni prijelazi iz konačnih statusa `confirmed` ili `rejected` u druge statuse.
@@ -218,13 +221,11 @@ Sljedeća pravila primjenjuju se u više dijelova sustava i važna su za dosljed
 
 | Aspekt | Mehanizam | Pravilo | Mjesto primjene |
 |---|---|---|---|
-| Autentifikacija | Google OIDC Authorization Code flow | Korisnik se autentificira preko Googlea; autorizacijski kod i tajna `client_secret` obrađuju se na poslužitelju. Parametar `state` provjerava se tijekom povratnog poziva. | `src/auth.js`, Passport strategija. |
-| Autorizacija | `requireLogin` i `requireRole` | Prava se provjeravaju na poslužitelju za zaštićene rute; skrivanje gumba u sučelju nije zamjena za provjeru ovlasti. | `src/middleware.js`, `src/routes/*.js`. |
-| Upravljanje sesijom | PostgreSQL sesije i kolačići | U sesiji se pohranjuje samo ID korisnika; sesije se pohranjuju u PostgreSQL-u. Kolačić je `httpOnly`, `secure` u produkciji i `sameSite=lax`; tajna dolazi iz `SESSION_SECRET`. | `server.js`, `src/app.js`, `connect-pg-simple`. |
-| SQL sigurnost | Parametrizirani upiti | Korisnički podaci prosljeđuju se SQL-u parametrizirano (`$1`, `$2`, …), a ne spajanjem u SQL niz. | `src/db.js` i upiti u rutama. |
-| XSS zaštita | EJS escaping i DOM API | EJS predlošci koriste `<%= %>` za escapiranje izlaznih vrijednosti; sadržaj popup prozora na karti gradi se DOM metodama, a ne konkatenacijom HTML nizova. | `views/*.ejs`, `public/map.js`. |
-| Validacija | Domenske funkcije | Prijava se provjerava prije pohrane: vrsta pojave, koordinate, vrijeme, veličina zrna tuče te duljina opisa i mjesta. | `src/domain.js`, obrada `POST /reports`. |
-| Integritet transakcije | SQL transakcija | Spremanje opažanja provodi se u transakciji `BEGIN/COMMIT`. | Obrada prijave opažanja. |
+| Autentifikacija | Google OIDC Authorization Code flow | Korisnik se autentificira preko Googlea; autorizacijski kod i tajna `client_secret` obrađuju se na poslužitelju. Parametar `state` provjerava se tijekom povratnog poziva. | `backend/src/auth.js`, Passport strategija. |
+| Autorizacija | `requireLogin` i `requireRole` | Prava se provjeravaju na poslužitelju za zaštićene rute; skrivanje gumba u sučelju nije zamjena za provjeru ovlasti. | `backend/src/rute/*.js`. |
+| Upravljanje sesijom | PostgreSQL sesije i kolačići | U sesiji se pohranjuje samo ID korisnika; sesije se pohranjuju u PostgreSQL-u. Kolačić je `httpOnly`, `secure` u produkciji i `sameSite=lax`; tajna dolazi iz `SESSION_SECRET`. | `backend/src/app.js`. |
+| SQL sigurnost | Parametrizirani upiti | Korisnički podaci prosljeđuju se SQL-u parametrizirano (`$1`, `$2`, …), a ne spajanjem u SQL niz. | `database/*` i upiti u rutama. |
+| Validacija | Domenske funkcije | Prijava se provjerava prije pohrane: vrsta pojave, koordinate, vrijeme, veličina zrna tuče te duljina opisa i mjesta. | obrada `POST /reports`. |
 | Konzistentnost moderacije | Atomski SQL CTE | Promjena statusa i reputacije autora provodi se zajedno, uz uvjet da je prijava još na čekanju. | Rute moderacije i PostgreSQL. |
 | Vrijeme | Vremenska zona `Europe/Zagreb` | Vrijeme iz obrasca tumači se kao zagrebačko, a prikaz koristi istu vremensku zonu. | Postavka `TZ=Europe/Zagreb` i obrada datuma. |
 
