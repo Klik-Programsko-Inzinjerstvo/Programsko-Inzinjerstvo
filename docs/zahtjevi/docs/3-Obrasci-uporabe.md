@@ -2,7 +2,7 @@
 
 ## 3.1 Dijagram obrazaca uporabe
 
-![Dijagram obrazaca uporabe](dijagrami/slike/uc-dijagram.png)
+![Dijagram obrazaca uporabe](../../dijagrami/slike/uc-dijagram.png)
 
 Generalizacija aktera: registrirani korisnik nasljeđuje ovlasti neregistriranog, moderator registriranog, administrator moderatora. Google je vanjski sustav koji potvrđuje identitet.
 
