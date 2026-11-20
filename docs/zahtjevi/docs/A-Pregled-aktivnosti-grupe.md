@@ -35,7 +35,8 @@
 | Implementacija autentifikacije i korisničkih sesija | NH, BC | 2 | `backend/src/auth.js` |
 | Implementacija prijava, događaja i poslovnih pravila | NH, BC, BP | 4 | `backend/src/*` |
 | Implementacija moderacije i upravljanja ulogama | NH, BC | 1 | Rute moderacije i administracije |
-| Izrada korisničkog sučelja i karte | GB i LČ | 5 | `server/views/`, `server/public/` |
+| Izrada korisničkog sučelja i karte | GB, LČ | 6 | `server/views/`, `server/public/` |
+| Izrada projektne dokumentacije | LP, DB | 7 | `docs/*` |
 
 ## A.4 Pregled promjena u repozitoriju
 
