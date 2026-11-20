@@ -46,106 +46,63 @@
 | OpenStreetMap (vanjski sustav) | Kartografska podloga. |
 | Servis e-pošte (vanjski sustav) | Slanje obavijesti e-poštom. |
 
-# TODO: ZAVRŠITI!!!
-
 ## 2.4 Ograničenja i pretpostavke
 
-**Cilj:** Zabilježiti projektno specifične granice i pretpostavke koje utječu na zahtjeve ili oblikovanje, zajedno s njihovim izvorom i praktičnom posljedicom. Ovo je njihovo mjerodavno mjesto u dokumentaciji.
 
 | ID | Tip | Opis ograničenja ili pretpostavke | Izvor | Inženjerska posljedica / Provjera |
-| --- | --- | --- | --- | --- |
-| C-01 | Ograničenje | [Fiksni tehnički ili procesni uvjet] | [Zadatak / Pravila] | [Utjecaj na arhitekturu i oblikovanje] |
-| AS-01 | Pretpostavka | [Očekivani uvjet, npr. o podacima ili okolini] | [Procjena tima] | [Kako i kada će se provjeriti valjanost] |
-|  |  |  |  |  |
-<details>
-<summary><strong>Ograničenja nasuprot pretpostavkama</strong></summary>
-
-Ograničenje je uvjet koji tim mora poštovati; pretpostavka je uvjet na koji se tim oslanja i koji treba ponovno provjeravati.
-
-**Primjer — projektni kontekst CrisisMapa:**
-
-| ID | Ograničenje ili pretpostavka | Izvor | Posljedica ili način provjere |
-| --- | --- | --- | --- |
-| C-01 | Odobreni zadatak zahtijeva OAuth prijavu u sustav za uređivanje vlastitih prijava korisnika. | Odobreni zadatak  | Zaštićeno uređivanje projektirati oko odabranog pružatelja identiteta; provjeriti autorizirane i neautorizirane zahtjeve. |
-| AS-01 | Prijave koje se prikazuju na karti imaju uporabive koordinate. | Pretpostavka o podacima  | Pregledati ogledne i uvezene prijave; planirati prikaz prijava bez valjanih koordinata. |
-
-**Ograničenje nasuprot pretpostavci:** C-01 navodi obvezujuću odluku i njezin arhitekturni učinak; AS-01 je moguće provjeriti i može se pokazati netočnim. Nemojte kopirati C-01 ako OAuth nije dio stvarnog odobrenog zadatka. Projektni odgovor objasnite u arhitekturi bez prepisivanja ove tablice.
-
-</details>
+|---|---|---|---|---|
+| C-01 | Ograničenje | Prijava korisnika provodi se putem Google OAuth 2.0 / OpenID Connect. | FZ-02 | Potrebna je integracija s Google sustavom za autentifikaciju. |
+| C-02 | Ograničenje | DHMZ je izvor službenih meteoroloških podataka u XML formatu. | FZ-03 | Sustav mora podržavati preuzimanje i obradu XML podataka. |
+| C-03 | Ograničenje | Kartografska podloga temelji se na OpenStreetMapu. | --- | Potrebna je integracija s OpenStreetMap kartom i navođenje izvora. |
+| C-04 | Ograničenje | Prijave se mogu odnositi samo na lokacije unutar Hrvatske, a vrijeme opažanja ne smije biti u budućnosti ni starije od 30 dana. | --- | Sustav provjerava lokaciju i vrijeme prilikom unosa prijave. |
+| C-05 | Ograničenje | Pristup funkcionalnostima ovisi o korisničkoj ulozi. | FZ-11, FZ-12, FZ-15 | Potrebna je provjera ovlasti korisnika. |
+| AS-01 | Pretpostavka | DHMZ redovito pruža dostupne XML podatke. | Projektna pretpostavka | Provjeriti dostupnost i strukturu podataka. |
+| AS-02 | Pretpostavka | Korisnik prilikom prijave nevremena može odrediti lokaciju putem karte ili GPS-a. | --- | Provjeriti ispravnost dohvaćanja koordinata. |
+| AS-03 | Pretpostavka | Google autentifikacijski servis dostupan je za prijavu korisnika. | FZ-02 | Provjeriti uspješnu i neuspješnu autentifikaciju. |
+| AS-04 | Pretpostavka | Servis e-pošte dostupan je za slanje obavijesti korisnicima. | FZ-10 | Provjeriti mogućnost povezivanja sa servisom e-pošte. |
 
 ---
 
 ## 2.5 Značajne promjene zahtjeva
 
-**Cilj:** Sačuvati razlog promjena koje mijenjaju dogovoreni opseg, prioritet ili kriterije prihvaćanja, uz istodobno održavanje prethodnih zahtjeva ažurnima.
-
 | Datum | ID zahtjeva | Promjena i razlog | Dogovoreno s / dokaz |
-| --- | --- | --- | --- |
-|  |  |  |  |
-
-<details>
-<summary><strong>Primjer značajne promjene</strong></summary>
-
-**Primjer scenarija — odluka tijekom pregleda CrisisMapa:**
-
-| Datum | ID zahtjeva | Promjena i razlog | Dogovoreno s / dokaz |
-| --- | --- | --- | --- |
-| [Datum pregleda] | F-004, NF-01 | Dodati ručni odabir lokacije kada korisnik odbije geolokaciju preglednika; bez toga građanin ne može podnijeti prijavu kriznog događaja s lokacijom. | [Poveznica na stvarnu bilješku pregleda ili zadatak tima] |
-
-**Razlog promjene:** Zapis navodi zahvaćene stavke i objašnjava razlog iz perspektive korisnika, a zatim upućuje na dokaz odluke.  Nakon stvarne odluke ažurirajte trenutačne zahtjeve; stilska izmjena teksta ne zahtijeva zapis u dnevniku promjena. Trenutačni red zadataka držite u alatu za praćenje zadataka.
-
-</details>
+|---|---|---|---|
+| — | — | U dosadašnjoj dokumentaciji nisu evidentirane značajne promjene zahtjeva. | Nije primjenjivo. |
 
 ---
 
 ## 2.6 Sljedivost zahtjeva
 
-**Cilj:** Osigurati dvosmjernu sljedivost — povezati zahtjeve s opisanim ponašanjem, dijelovima sustava koji ih ostvaruju te ispitivanjem ili drugom provjerom. 
-
 | ID zahtjeva | Obrazac uporabe / modul | Arhitekturna realizacija | Ispitivanje ili provjera |
-| --- | --- | --- | --- |
-| F-001 | [UC-001] | [Komponenta, modul ili drugo mjesto realizacije] | [ST-01, CT-01 ili druga provjera] |
-|  |  |  |  |
-
-<details>
-<summary><strong>Sljedivost zahtjeva do obrazaca uporabe i ispitivanja</strong></summary>
-
-**Primjer — poveznice zahtjeva CrisisMapa:**
-
-| ID zahtjeva | Obrazac uporabe / ponašanje | Arhitekturna realizacija | Ispitivanje / provjera |
-| --- | --- | --- | --- |
-| F-004 | UC-002 Podnošenje prijave kriznog događaja | Web-klijent; API za prijave; usluga za prijave | ST-01 Valjano podnošenje prijave; ST-02 Nedostaje obavezna lokacija; ST-03 Dopuštenje geolokacije odbijeno |
-| F-005 | Odabir primatelja obavijesti | Proces za obavijesti | CT-06 Primatelji obavijesti; potpuna dostava obavijesti nije pokrivena ovom provjerom |
-
-**Pokrivenost i dokazi:** CT-06 provjerava odabir primatelja za F-005, ali sam po sebi ne dokazuje da je obavijest stvarno dostavljena; ako projekt zahtijeva potpunu dostavu od početka do kraja, za taj dio treba postojati zasebna provjera. Svaki redak pokazuje gdje je zahtjev opisan kao ponašanje, gdje je ostvaren u sustavu i gdje se nalazi dokaz njegove provjere. Zahtjev ne mora imati zaseban obrazac uporabe ako ne opisuje korisničku interakciju; tada navedite relevantno ponašanje, arhitekturni element ili drugi prikladan način realizacije. U svojem projektu koristite stvarne nazive komponenata, modula i provjera iz dokumentacije i implementacije. Nedostajuću poveznicu ostavite praznom ili označite kao *na čekanju* uz kratak razlog. Stvarni rezultati ispitivanja bilježe se uz ispitne slučajeve; ova tablica pokazuje gdje ih pronaći.
-
-</details>
+|---|---|---|---|
+| FZ-01 | UC1, UC5, UC6 | Modul karte i pregleda prijava | Na čekanju – nisu definirani ispitni slučajevi. |
+| FZ-02 | UC2, UC3 | Modul autentifikacije; Google OAuth 2.0 | Na čekanju – nisu definirani ispitni slučajevi. |
+| FZ-03 | Automatizirani proces sustava | Modul za dohvat DHMZ podataka | Na čekanju – nisu definirani ispitni slučajevi. |
+| FZ-04 | UC1 | Modul karte i filtara | Na čekanju – nisu definirani ispitni slučajevi. |
+| FZ-05 | --- | Modul korisničkog profila | Na čekanju – funkcionalnost nije razrađena. |
+| FZ-06 | UC4 | Modul prijave opažanja nevremena | Na čekanju – nisu definirani ispitni slučajevi. |
+| FZ-07 | UC7, UC8 | Modul komentara i glasovanja | Na čekanju – nisu definirani ispitni slučajevi. |
+| FZ-08 | UC4, UC7, UC9, UC10 | Modul ocjene vjerodostojnosti i reputacije | Na čekanju – nisu definirani ispitni slučajevi. |
+| FZ-09 | UC11 | Modul grupiranja prijava u događaje | Na čekanju – nisu definirani ispitni slučajevi. |
+| FZ-10 | --- | Modul praćenja i obavijesti | Na čekanju – funkcionalnost nije razrađena. |
+| FZ-11 | UC9 | Modul moderacije prijava | Na čekanju – nisu definirani ispitni slučajevi. |
+| FZ-12 | UC4, UC7, UC10 | Modul korisničkih uloga i pouzdanih motritelja | Na čekanju – nisu definirani ispitni slučajevi. |
+| FZ-13 | --- | Modul stručnih komentara meteorologa | Na čekanju – funkcionalnost nije razrađena. |
+| FZ-14 | --- | Modul statistike i izvoza podataka | Na čekanju – funkcionalnost nije razrađena. |
+| FZ-15 | UC10 | Modul administracije korisnika i uloga | Na čekanju – nisu definirani ispitni slučajevi. |
+| NFZ-01 | UC1–UC10 | Korisničko sučelje | Provjera responzivnosti na različitim uređajima. |
+| NFZ-02 | UC1 | Modul karte i automatskog osvježavanja | Provjera osvježavanja karte svakih 20 sekundi. |
+| NFZ-03 | FZ-03, automatizirani proces sustava | Modul dohvaćanja i pohrane meteoroloških podataka | Provjera rada aplikacije pri nedostupnosti DHMZ-a. |
+| NFZ-04 | UC2, UC3, UC6, UC7, UC9, UC10 | Modul autentifikacije i autorizacije | Provjera prijave i pristupa prema korisničkim ulogama. |
+| NFZ-05 | UC1–UC10 | Korisničko sučelje i pozadinski procesi | Provjera vremena učitavanja stranica. |
+| NFZ-06 | UC1, FZ-03 | Modul prikaza karte i meteoroloških podataka | Provjera navođenja izvora podataka. |
 
 ---
 
 ## 2.7 Pregled zahtjeva
 
-**Cilj:** Zabilježiti važne povratne informacije o zahtjevima i odluke koje iz njih proizlaze na dvije formalne kontrolne točke projekta, u 7. i 14. tjednu.
-
 | Kontrolna točka | Povratna informacija ili nalaz | Odluka o zahtjevu ili opsegu |
-| --- | --- | --- |
-| Iteracija 1 | [Povratna informacija] | [Odluka; vidi odjeljak 2.5] |
-| Demo 2  | [Povratna informacija] | [Odluka; vidi odjeljak 2.5] |
-| Završni pregled | [Povratna informacija] | [Odluka; vidi odjeljak 2.5] |
-
-<details>
-<summary><strong>Odluke o zahtjevima nakon pregleda</strong></summary>
-
-**Primjer scenarija — pregled zahtjeva CrisisMapa:**
-
-| Kontrolna točka | Povratna informacija ili nalaz | Odluka o zahtjevu ili opsegu |
-| --- | --- | --- |
-| Iteracija 1 | Demonstracija pokazuje da odbijanje pristupa lokaciji preglednika onemogućuje podnošenje prijave. | Dogovoriti ručni odabir lokacije; ažurirati F-004 i primjer NF-01 te razlog zabilježiti u odjeljku 2.5. |
-
-**Odluka povezana s povratnom informacijom:** Zapis povezuje opaženo ponašanje s konkretnom promjenom zahtjeva i izbjegava zapisnik cijelog sastanka. Zapišite samo stvarne povratne informacije i odluke za kontrolne točke. Konzultacije u nekom drugom tjednu ne stvaraju dodatnu obaveznu predaju.
-
-</details>
-
----
-
->**Završna provjera:** Zahtjevi su aktualni, provjerljivi i povezani. Svaki važan zahtjev moguće je pratiti od njegova opisa i ponašanja preko mjesta realizacije u sustavu do odgovarajućeg ispitivanja ili druge provjere. Poveznice koriste stvarne identifikatore i nazive iz projektne dokumentacije.
+|---|---|---|
+| Iteracija 1 | --- | --- |
+| Demo 2 | --- | --- |
+| Završni pregled | --- | --- |
