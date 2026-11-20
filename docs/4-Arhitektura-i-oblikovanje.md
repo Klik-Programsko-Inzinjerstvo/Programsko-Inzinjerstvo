@@ -157,17 +157,17 @@ Prijava je povezana s autorom i može biti pridružena događaju. Događaj može
 
 **Dijagram razreda:**
 
-![Dijagram razreda StormWatch](../../dijagrami/slike/dijagram-razreda.png)
+![Dijagram razreda StormWatch](assets/diagrams/dijagram-razreda.png)
 
-**PlantUML izvor:** [izvor](../../dijagrami/src/dijagram-razreda.puml)
+**PlantUML izvor:** [izvor](puml/dijagram-razreda.puml)
 
 ## 4.4 Ponašanje tijekom izvođenja
 
 ### 4.4.1 Reprezentativni UML sekvencijski dijagram
 
-![Sekvencijski dijagram prijave Googleom](../../dijagrami/slike/sekvencijski-dijagram.png)
+![Sekvencijski dijagram prijave Googleom](assets/diagrams/sekvencijski-dijagram.png)
 
-**PlantUML izvor:** [izvor](../../dijagrami/src/sekvencijski-dijagram.puml)
+**PlantUML izvor:** [izvor](puml/sekvencijski-dijagram.puml)
 
 ### 4.4.2 Reprezentativni UML dijagram stanja
 
@@ -175,9 +175,9 @@ Vlasnik stanja je domenski objekt **prijava opažanja nevremena**. Status prijav
 
 **Dijagram stanja:**
 
-![Dijagram stanja prijave](../../dijagrami/slike/stanja-prijave.png)
+![Dijagram stanja prijave](assets/diagrams/stanja-prijave.png)
 
-**PlantUML izvor:** [izvor](../../dijagrami/src/stanja-prijave.puml)
+**PlantUML izvor:** [izvor](puml/stanja-prijave.puml)
 
 Prijava pri stvaranju dobiva početni status `pending` ili `confirmed`. Prijave korisnika koji imaju ulogu pouzdanog motritelja, moderatora, meteorologa ili administratora odmah su potvrđene; ostale čekaju moderaciju. Moderator ili administrator može prijavu na čekanju potvrditi ili odbiti. U dostavljenom opisu nisu navedeni prijelazi iz konačnih statusa `confirmed` ili `rejected` u druge statuse.
 
